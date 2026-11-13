@@ -1,0 +1,84 @@
+# 역할별 모델 설정. 환경변수로 덮어쓸 수 있다: PROVIDERS__<종류>__<역할>__<키>[__<하위키>]
+#   예) PROVIDERS__LLM__FAST__IMPL=openai_compatible
+#       PROVIDERS__LLM__FAST__OPTIONS__BASE_URL=http://llm.internal/v1
+# 사내 모델을 붙이는 절차: docs/providers.md
+#
+# 공통 키: impl, model, max_concurrency(프로세스 전역 동시 호출 수), timeout_s, max_retries, backoff_base_s, options
+
+llm:
+  # 다듬기·화자 판정·꼬리질문 (면접 중, 빨라야 한다)
+  fast:
+    impl: fake
+    model: fake-llm
+    max_concurrency: 16
+    timeout_s: 10
+    max_retries: 1
+    options:
+      latency_ms: 0
+  # 브리핑·평가·보고서 (면접 전후, 품질 우선)
+  quality:
+    impl: fake
+    model: fake-llm
+    max_concurrency: 4
+    timeout_s: 600
+    max_retries: 2
+    options:
+      latency_ms: 0
+
+stt:
+  # 면접 중 청크 전사
+  live:
+    impl: fake
+    model: fake-whisper
+    max_concurrency: 8
+    timeout_s: 20
+    max_retries: 2
+    options:
+      latency_ms: 0
+  # 면접 뒤 방 전체 재전사
+  post:
+    impl: fake
+    model: fake-whisper
+    max_concurrency: 2
+    timeout_s: 120
+    max_retries: 2
+    options:
+      latency_ms: 0
+
+embedding:
+  # none이면 질문 매칭은 문자 n-gram TF-IDF를 쓴다
+  default:
+    impl: none
+
+# ---- 사내 모델 예시 (값은 반입 후 확인해서 채운다) ----
+# llm:
+#   fast:
+#     impl: openai_compatible
+#     model: <사내 모델 이름>
+#     max_concurrency: 16
+#     timeout_s: 10
+#     max_retries: 1
+#     options:
+#       base_url: http://<llm-host>/v1
+#       api_key_env: LLM_API_KEY          # 키는 환경변수에만 둔다
+#       headers: { "X-Dept": "people" }   # 필요하면
+#       temperature: 0.2
+#       max_tokens: 1024
+# stt:
+#   live:
+#     impl: whisper_http
+#     model: whisper-large-v3
+#     max_concurrency: 8
+#     timeout_s: 20
+#     options:
+#       base_url: http://<ds-api-hub-host>
+#       path: /v1/audio/transcriptions
+#       api_key_env: STT_API_KEY
+#       auth_header: Authorization
+#       auth_prefix: "Bearer "
+#       file_field: file
+#       model_field: model
+#       language_field: language
+#       prompt_field: prompt
+#       extra_fields: { response_format: json }
+#       response_text_path: text

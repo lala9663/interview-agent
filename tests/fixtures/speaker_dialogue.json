@@ -1,0 +1,1257 @@
+{
+ "description": "합성 면접 대화(화자 정답 표시). scripts/gen_speaker_fixture.py로 만든 파일이다. 직접 고치지 않는다.",
+ "bank": [
+  {
+   "id": 1,
+   "category": "경험",
+   "text": "요구사항 분석 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 2,
+   "category": "개념",
+   "text": "동시성 문제에 대해 설명해 주세요."
+  },
+  {
+   "id": 3,
+   "category": "개념",
+   "text": "저전력 설계에 대해 설명해 주세요."
+  },
+  {
+   "id": 4,
+   "category": "경험",
+   "text": "펌웨어 업데이트 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 5,
+   "category": "개념",
+   "text": "부트로더에 대해 설명해 주세요."
+  },
+  {
+   "id": 6,
+   "category": "판단",
+   "text": "디바이스 드라이버에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 7,
+   "category": "경험",
+   "text": "통신 프로토콜 설계 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 8,
+   "category": "개념",
+   "text": "기술 문서 작성에 대해 설명해 주세요."
+  },
+  {
+   "id": 9,
+   "category": "개념",
+   "text": "성능 최적화에 대해 설명해 주세요."
+  },
+  {
+   "id": 10,
+   "category": "판단",
+   "text": "저전력 설계에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 11,
+   "category": "인성",
+   "text": "협업 중 의견 충돌을 어떻게 해결했나요?"
+  },
+  {
+   "id": 12,
+   "category": "경험",
+   "text": "버전 관리 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 13,
+   "category": "경험",
+   "text": "저전력 설계 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 14,
+   "category": "개념",
+   "text": "메모리 누수에 대해 설명해 주세요."
+  },
+  {
+   "id": 15,
+   "category": "경험",
+   "text": "메모리 누수 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 16,
+   "category": "경험",
+   "text": "코드 리뷰 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 17,
+   "category": "경험",
+   "text": "TCP와 UDP 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 18,
+   "category": "개념",
+   "text": "인터럽트 처리에 대해 설명해 주세요."
+  },
+  {
+   "id": 19,
+   "category": "판단",
+   "text": "객체 지향 설계에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 20,
+   "category": "경험",
+   "text": "인터럽트 처리 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 21,
+   "category": "경험",
+   "text": "동시성 문제 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 22,
+   "category": "개념",
+   "text": "해시 테이블에 대해 설명해 주세요."
+  },
+  {
+   "id": 23,
+   "category": "개념",
+   "text": "디버깅 도구에 대해 설명해 주세요."
+  },
+  {
+   "id": 24,
+   "category": "개념",
+   "text": "통신 프로토콜 설계에 대해 설명해 주세요."
+  },
+  {
+   "id": 25,
+   "category": "개념",
+   "text": "일정 관리에 대해 설명해 주세요."
+  },
+  {
+   "id": 26,
+   "category": "판단",
+   "text": "프로세스와 스레드에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 27,
+   "category": "경험",
+   "text": "디바이스 드라이버 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 28,
+   "category": "인성",
+   "text": "가장 크게 실패한 경험과 거기서 배운 점은 무엇인가요?"
+  },
+  {
+   "id": 29,
+   "category": "경험",
+   "text": "해시 테이블 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 30,
+   "category": "판단",
+   "text": "일정 관리에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 31,
+   "category": "개념",
+   "text": "캐시 메모리에 대해 설명해 주세요."
+  },
+  {
+   "id": 32,
+   "category": "개념",
+   "text": "요구사항 분석에 대해 설명해 주세요."
+  },
+  {
+   "id": 33,
+   "category": "개념",
+   "text": "코드 리뷰에 대해 설명해 주세요."
+  },
+  {
+   "id": 34,
+   "category": "경험",
+   "text": "뮤텍스와 세마포어 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 35,
+   "category": "판단",
+   "text": "동시성 문제에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 36,
+   "category": "판단",
+   "text": "RTOS 스케줄링에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 37,
+   "category": "경험",
+   "text": "RTOS 스케줄링 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 38,
+   "category": "경험",
+   "text": "성능 최적화 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 39,
+   "category": "경험",
+   "text": "기술 문서 작성 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 40,
+   "category": "경험",
+   "text": "부트로더 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 41,
+   "category": "경험",
+   "text": "예외 처리 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 42,
+   "category": "개념",
+   "text": "가상 메모리에 대해 설명해 주세요."
+  },
+  {
+   "id": 43,
+   "category": "개념",
+   "text": "버전 관리에 대해 설명해 주세요."
+  },
+  {
+   "id": 44,
+   "category": "인성",
+   "text": "5년 뒤에 어떤 개발자가 되고 싶나요?"
+  },
+  {
+   "id": 45,
+   "category": "인성",
+   "text": "본인의 강점과 약점을 말씀해 주세요."
+  },
+  {
+   "id": 46,
+   "category": "경험",
+   "text": "객체 지향 설계 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 47,
+   "category": "판단",
+   "text": "단위 테스트에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 48,
+   "category": "판단",
+   "text": "뮤텍스와 세마포어에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 49,
+   "category": "경험",
+   "text": "빌드 자동화 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 50,
+   "category": "경험",
+   "text": "캐시 메모리 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 51,
+   "category": "개념",
+   "text": "디바이스 드라이버에 대해 설명해 주세요."
+  },
+  {
+   "id": 52,
+   "category": "판단",
+   "text": "데이터베이스 인덱스에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 53,
+   "category": "판단",
+   "text": "코드 리뷰에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 54,
+   "category": "판단",
+   "text": "정렬 알고리즘에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 55,
+   "category": "판단",
+   "text": "캐시 메모리에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 56,
+   "category": "개념",
+   "text": "로그 수집에 대해 설명해 주세요."
+  },
+  {
+   "id": 57,
+   "category": "개념",
+   "text": "예외 처리에 대해 설명해 주세요."
+  },
+  {
+   "id": 58,
+   "category": "판단",
+   "text": "기술 문서 작성에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 59,
+   "category": "개념",
+   "text": "RTOS 스케줄링에 대해 설명해 주세요."
+  },
+  {
+   "id": 60,
+   "category": "개념",
+   "text": "프로세스와 스레드에 대해 설명해 주세요."
+  },
+  {
+   "id": 61,
+   "category": "경험",
+   "text": "단위 테스트 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 62,
+   "category": "판단",
+   "text": "요구사항 분석에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 63,
+   "category": "경험",
+   "text": "디버깅 도구 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 64,
+   "category": "판단",
+   "text": "메모리 누수에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 65,
+   "category": "경험",
+   "text": "정렬 알고리즘 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 66,
+   "category": "판단",
+   "text": "부트로더에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 67,
+   "category": "판단",
+   "text": "디버깅 도구에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 68,
+   "category": "인성",
+   "text": "스트레스를 받을 때 어떻게 관리하나요?"
+  },
+  {
+   "id": 69,
+   "category": "개념",
+   "text": "교착 상태에 대해 설명해 주세요."
+  },
+  {
+   "id": 70,
+   "category": "개념",
+   "text": "단위 테스트에 대해 설명해 주세요."
+  },
+  {
+   "id": 71,
+   "category": "인성",
+   "text": "마감이 촉박할 때 일의 우선순위를 어떻게 정하나요?"
+  },
+  {
+   "id": 72,
+   "category": "경험",
+   "text": "교착 상태 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 73,
+   "category": "경험",
+   "text": "가상 메모리 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 74,
+   "category": "판단",
+   "text": "가상 메모리에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 75,
+   "category": "경험",
+   "text": "로그 수집 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 76,
+   "category": "경험",
+   "text": "프로세스와 스레드 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 77,
+   "category": "판단",
+   "text": "TCP와 UDP에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 78,
+   "category": "경험",
+   "text": "일정 관리 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 79,
+   "category": "판단",
+   "text": "통신 프로토콜 설계에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 80,
+   "category": "경험",
+   "text": "데이터베이스 인덱스 관련해서 실제로 다뤄 본 경험이 있나요?"
+  },
+  {
+   "id": 81,
+   "category": "판단",
+   "text": "교착 상태에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 82,
+   "category": "판단",
+   "text": "로그 수집에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 83,
+   "category": "판단",
+   "text": "인터럽트 처리에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 84,
+   "category": "개념",
+   "text": "TCP와 UDP에 대해 설명해 주세요."
+  },
+  {
+   "id": 85,
+   "category": "판단",
+   "text": "버전 관리에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 86,
+   "category": "인성",
+   "text": "팀에서 주로 어떤 역할을 맡는 편인가요?"
+  },
+  {
+   "id": 87,
+   "category": "개념",
+   "text": "뮤텍스와 세마포어에 대해 설명해 주세요."
+  },
+  {
+   "id": 88,
+   "category": "인성",
+   "text": "새로운 기술을 배울 때 어떤 방법으로 익히나요?"
+  },
+  {
+   "id": 89,
+   "category": "개념",
+   "text": "빌드 자동화에 대해 설명해 주세요."
+  },
+  {
+   "id": 90,
+   "category": "판단",
+   "text": "빌드 자동화에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 91,
+   "category": "개념",
+   "text": "객체 지향 설계에 대해 설명해 주세요."
+  },
+  {
+   "id": 92,
+   "category": "인성",
+   "text": "우리 회사에 지원한 이유는 무엇인가요?"
+  },
+  {
+   "id": 93,
+   "category": "판단",
+   "text": "해시 테이블에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 94,
+   "category": "개념",
+   "text": "정렬 알고리즘에 대해 설명해 주세요."
+  },
+  {
+   "id": 95,
+   "category": "개념",
+   "text": "데이터베이스 인덱스에 대해 설명해 주세요."
+  },
+  {
+   "id": 96,
+   "category": "판단",
+   "text": "예외 처리에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 97,
+   "category": "인성",
+   "text": "리더와 생각이 다를 때 어떻게 행동하나요?"
+  },
+  {
+   "id": 98,
+   "category": "판단",
+   "text": "펌웨어 업데이트에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 99,
+   "category": "판단",
+   "text": "성능 최적화에서 주의해야 할 점은 무엇인가요?"
+  },
+  {
+   "id": 100,
+   "category": "개념",
+   "text": "펌웨어 업데이트에 대해 설명해 주세요."
+  }
+ ],
+ "utterances": [
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "안녕하세요 자리에 앉으시고 간단하게 자기소개 부탁드립니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "안녕하세요 저는 임베디드 소프트웨어 개발자를 지망하는 지원자입니다 학부에서 전자공학을 전공했고 동아리에서 펌웨어를 삼 년 동안 개발했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "네 가상 메모리에 대해 설명해 주세요",
+   "bankId": 42
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "echo_answer",
+   "text": "가상 메모리에 대해 설명드리면 먼저 기본 개념은 자원을 어떻게 나누고 지키느냐의 문제입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "그럼 혹시 인터럽트 처리 쪽은 직접 해 보신 적 있으세요",
+   "bankId": 20
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 인터럽트 처리에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "방금 말씀하신 부분에서 성능은 얼마나 개선됐나요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 디바이스 드라이버에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "TCP와 UDP에 대해 설명해 주세요",
+   "bankId": 84
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 TCP와 UDP 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "네 그러면 혹시 통신 프로토콜 설계 쪽은 직접 해 보신 적 있으세요",
+   "bankId": 7
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 통신 프로토콜 설계에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "그때 팀원은 몇 명이었죠",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 저전력 설계는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "네 잘 들었습니다 다음 질문으로 넘어가겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "교착 상태에 대해 설명해 주세요",
+   "bankId": 69
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "echo_answer",
+   "text": "교착 상태에서 주의해야 할 점은 크게 두 가지라고 생각합니다 하나는 경계 조건이고 다른 하나는 타이밍입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "추가로 말씀드리면 그 내용을 문서로 남겨서 다음 기수가 참고할 수 있게 했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "저전력 설계 관련해서 실제로 다뤄 본 경험이 있나요",
+   "bankId": 13
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 저전력 설계에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그리고 그 경험 덕분에 문제를 작게 나눠서 확인하는 습관이 생겼습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "왜 그 방식을 선택하셨어요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그때는 팀원 세 명이 같이 했는데 단위 테스트 부분은 제가 맡아서 설계부터 구현까지 했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "네 로그 수집 관련해서 실제로 다뤄 본 경험이 있나요",
+   "bankId": 75
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 로그 수집는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "기술 문서 작성 이게 어떤 건지 간단하게 설명 한번 해 주실래요",
+   "bankId": 8
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 기술 문서 작성는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "조금만 더 구체적으로요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "정렬 알고리즘는 제가 프로젝트에서 직접 다뤄 봤습니다 처음에는 개념만 알고 있었는데 실제로 적용하면서 문제를 겪었고 로그를 보면서 원인을 찾았습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "네 알겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "네 가장 크게 실패한 경험과 거기서 배운 점은 무엇인가요",
+   "bankId": 28
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 협업 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "좋습니다 부트로더 이게 어떤 건지 간단하게 설명 한번 해 주실래요",
+   "bankId": 5
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 부트로더 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "그럼 버전 관리 관련해서 실제로 다뤄 본 경험이 있나요",
+   "bankId": 12
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그때는 팀원 세 명이 같이 했는데 버전 관리 부분은 제가 맡아서 설계부터 구현까지 했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그리고 그 경험 덕분에 문제를 작게 나눠서 확인하는 습관이 생겼습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "로그 수집에 대해 설명해 주세요",
+   "bankId": 56
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "네 로그 수집 관련해서는 수업에서 배운 내용을 바탕으로 작은 실험을 해 봤고 그 결과를 정리해서 팀에 공유했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "그럼 정렬 알고리즘 다룰 때 어떤 점을 특히 신경 써야 할까요",
+   "bankId": 54
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 정렬 알고리즘에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "다만 그때 테스트를 충분히 못 한 게 아쉬웠고 지금이라면 자동화를 먼저 했을 것 같습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "그 숫자는 어떻게 측정한 거예요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 성능 최적화는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "시간 관계상 마지막 질문 드리겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "그럼 캐시 메모리에 대해 설명해 주세요",
+   "bankId": 31
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 캐시 메모리는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "네 팀원이랑 생각이 안 맞았을 때 어떻게 푸셨는지 궁금한데요",
+   "bankId": 86
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 협업에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "아 그렇군요 그러면 테스트는 어떻게 하셨습니까",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "short_answer",
+   "text": "음 그건 잘 모르겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "결과적으로 처리 시간이 삼십 퍼센트 정도 줄었고 발표에서도 좋은 평가를 받았습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "캐시 메모리에서 주의해야 할 점은 무엇인가요",
+   "bankId": 55
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그때는 팀원 세 명이 같이 했는데 캐시 메모리 부분은 제가 맡아서 설계부터 구현까지 했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "추가로 말씀드리면 그 내용을 문서로 남겨서 다음 기수가 참고할 수 있게 했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "빌드 자동화 할 때 조심해야 되는 게 뭐라고 생각하세요",
+   "bankId": 90
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 빌드 자동화는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "본인이 직접 짠 코드는 어느 정도 분량이었나요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "short_answer",
+   "text": "음 그건 잘 모르겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "네 답변 감사합니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "네 그러면 코드 리뷰 관련해서 실제로 다뤄 본 경험이 있나요",
+   "bankId": 16
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 코드 리뷰 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "그럼 혹시 해시 테이블 쪽은 직접 해 보신 적 있으세요",
+   "bankId": 29
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 해시 테이블 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "그 문제를 다시 만나면 다르게 하실 건가요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 일정 관리에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "그럼 펌웨어 업데이트에서 주의해야 할 점은 무엇인가요",
+   "bankId": 98
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "펌웨어 업데이트는 제가 프로젝트에서 직접 다뤄 봤습니다 처음에는 개념만 알고 있었는데 실제로 적용하면서 문제를 겪었고 로그를 보면서 원인을 찾았습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "결과적으로 처리 시간이 삼십 퍼센트 정도 줄었고 발표에서도 좋은 평가를 받았습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "그럼 예외 처리에서 주의해야 할 점은 무엇인가요",
+   "bankId": 96
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "echo_answer",
+   "text": "예외 처리에서 주의해야 할 점은 크게 두 가지라고 생각합니다 하나는 경계 조건이고 다른 하나는 타이밍입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "혹시 그 과정에서 다른 대안도 검토해 보셨어요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "short_answer",
+   "text": "네 지금도 동아리에서 쓰고 있습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그리고 그 경험 덕분에 문제를 작게 나눠서 확인하는 습관이 생겼습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "좋습니다 이어서 질문하겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "네 디바이스 드라이버에서 주의해야 할 점은 무엇인가요",
+   "bankId": 6
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "디바이스 드라이버는 제가 프로젝트에서 직접 다뤄 봤습니다 처음에는 개념만 알고 있었는데 실제로 적용하면서 문제를 겪었고 로그를 보면서 원인을 찾았습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "인터럽트 처리 이게 어떤 건지 간단하게 설명 한번 해 주실래요",
+   "bankId": 18
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 인터럽트 처리는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "그게 본인 아이디어였나요 아니면 팀에서 정한 건가요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "성능 최적화는 제가 프로젝트에서 직접 다뤄 봤습니다 처음에는 개념만 알고 있었는데 실제로 적용하면서 문제를 겪었고 로그를 보면서 원인을 찾았습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "그럼 리더와 생각이 다를 때 어떻게 행동하나요",
+   "bankId": 97
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 협업는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그리고 그 경험 덕분에 문제를 작게 나눠서 확인하는 습관이 생겼습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "좋습니다 객체 지향 설계 다룰 때 어떤 점을 특히 신경 써야 할까요",
+   "bankId": 19
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 객체 지향 설계 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그리고 그 경험 덕분에 문제를 작게 나눠서 확인하는 습관이 생겼습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "프로세스와 스레드 관련해서 실제로 다뤄 본 경험이 있나요",
+   "bankId": 76
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그때는 팀원 세 명이 같이 했는데 프로세스와 스레드 부분은 제가 맡아서 설계부터 구현까지 했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "네 편하게 말씀하시면 됩니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "좋습니다 부트로더 관련해서 실제로 다뤄 본 경험이 있나요",
+   "bankId": 40
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "부트로더는 제가 프로젝트에서 직접 다뤄 봤습니다 처음에는 개념만 알고 있었는데 실제로 적용하면서 문제를 겪었고 로그를 보면서 원인을 찾았습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "좋습니다 RTOS 스케줄링 다룰 때 어떤 점을 특히 신경 써야 할까요",
+   "bankId": 36
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 RTOS 스케줄링 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "결과물은 지금도 쓰이고 있나요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "네 코드 리뷰 관련해서는 수업에서 배운 내용을 바탕으로 작은 실험을 해 봤고 그 결과를 정리해서 팀에 공유했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "5년 뒤에 어떤 개발자가 되고 싶나요",
+   "bankId": 44
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그때는 팀원 세 명이 같이 했는데 협업 부분은 제가 맡아서 설계부터 구현까지 했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "네 그러면 교착 상태 할 때 조심해야 되는 게 뭐라고 생각하세요",
+   "bankId": 81
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "네 교착 상태 관련해서는 수업에서 배운 내용을 바탕으로 작은 실험을 해 봤고 그 결과를 정리해서 팀에 공유했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "그 부분은 이력서에 적으신 내용과 조금 다른데 설명해 주시겠어요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "음 그 부분은 처음에 잘못 판단했었습니다 교착 상태 문제라고 생각 못 하고 하드웨어를 의심했는데 측정해 보니 소프트웨어 쪽이었습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "네 잘 들었습니다 다음 질문으로 넘어가겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "스트레스를 받을 때 어떻게 관리하나요",
+   "bankId": 68
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 협업는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_variant",
+   "text": "네 혹시 RTOS 스케줄링 쪽은 직접 해 보신 적 있으세요",
+   "bankId": 37
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "네 RTOS 스케줄링 관련해서는 수업에서 배운 내용을 바탕으로 작은 실험을 해 봤고 그 결과를 정리해서 팀에 공유했습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "improvised",
+   "text": "일정이 밀렸을 때는 어떻게 하셨죠",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "저는 예외 처리에서 가장 중요한 건 재현 가능한 환경을 먼저 만드는 거라고 생각합니다 그래서 항상 테스트 코드를 먼저 작성하는 편입니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "bank_exact",
+   "text": "좋습니다 해시 테이블에서 주의해야 할 점은 무엇인가요",
+   "bankId": 93
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "솔직히 해시 테이블는 깊게 해 보지는 못했습니다 다만 기본 원리는 이해하고 있고 입사 후에 빠르게 익히겠습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "answer",
+   "text": "그리고 그 경험 덕분에 문제를 작게 나눠서 확인하는 습관이 생겼습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "마지막으로 궁금한 점 있으시면 말씀해 주세요",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "reverse_question",
+   "text": "혹시 입사하면 어떤 팀에 배치되는지 여쭤봐도 될까요",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "interviewer_explain",
+   "text": "저희 팀은 주로 장비 제어 소프트웨어를 만들고 있고 신입은 육 개월 정도 교육을 받습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "reverse_question",
+   "text": "신입 교육 기간은 얼마나 되나요",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "interviewer_explain",
+   "text": "배치는 교육이 끝난 다음에 본인 희망하고 팀 상황을 같이 봐서 정합니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "reverse_question",
+   "text": "팀에서는 코드 리뷰를 어떤 식으로 하시는지 궁금합니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "interviewer_explain",
+   "text": "리뷰는 머지 전에 두 명 이상이 보는 게 원칙이고 저도 매일 리뷰를 합니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "reverse_question",
+   "text": "야근이 많은 편인가요",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "interviewer_explain",
+   "text": "프로젝트 막바지에는 조금 바쁘지만 평소에는 그렇게 많지 않습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "reverse_question",
+   "text": "죄송한데 질문을 한 번만 다시 말씀해 주시겠어요",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "interviewer_explain",
+   "text": "아 네 방금 질문은 그 프로젝트에서 본인 역할이 뭐였냐는 거였습니다",
+   "bankId": null
+  },
+  {
+   "speaker": "CANDIDATE",
+   "kind": "short_answer",
+   "text": "네 답변 감사합니다",
+   "bankId": null
+  },
+  {
+   "speaker": "INTERVIEWER",
+   "kind": "procedural",
+   "text": "네 오늘 면접은 여기까지입니다 수고하셨습니다",
+   "bankId": null
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+# 블라인드/금지 항목 규칙.
+# 현업 기준이 확정되면 이 파일만 고친다(코드 수정 없음). 방법: docs/blind-rules.md
+# 지금 내용은 임시 기준이다(채용절차법 제4조의3 등 일반 원칙을 참고해 작성). 현업 확인 전이다.
+#
+# topic 하나의 키:
+#   code         : 응답의 excluded·violations에 나가는 값 (영문, 바꾸면 백엔드·프론트 표시도 확인)
+#   label        : 화면에 보이는 이름
+#   description  : 무엇을 왜 막는지
+#   profile_keys : 지원자 프로필(JSON)에서 이 이름의 키는 값과 함께 지운다 (대소문자 무시)
+#   keywords     : 글에 이 낱말이 있으면 금지 항목으로 본다
+#   patterns     : 정규식(파이썬 re). 낱말만으로는 오탐이 많은 경우에 쓴다
+#   allow        : 이 낱말이 들어간 부분은 오탐으로 보고 무시한다 (예: "가족 같은 분위기")
+
+version: "draft-2026-11"
+
+topics:
+  - code: gender
+    label: 성별
+    description: 성별과 성별을 전제로 한 질문·서술
+    profile_keys: [gender, sex, 성별]
+    keywords: [남성, 여성, 남학생, 여학생]
+    patterns: ["(?<![가-힣])성별", "(?<![가-힣])(남자|여자)"]   # 앞 글자 조건: "특성별", "참여자" 오탐 방지
+    allow: [남성복, 여성복]
+
+  - code: age
+    label: 나이
+    description: 나이, 생년월일, 나이를 짐작하게 하는 질문
+    profile_keys: [age, birthDate, birth, birthday, 나이, 생년월일]
+    keywords: [생년월일, 출생연도]
+    patterns: ["나이(가|는|를|도|에)", "(몇|\\d{1,2})\\s*살", "\\d{2,4}\\s*년생", "연세가", "만\\s*\\d{1,2}\\s*세"]
+
+  - code: family
+    label: 가족
+    description: 가족 관계, 가족의 직업·학력·재산
+    profile_keys: [family, familyRelations, parents, 가족, 가족관계, 가족사항]
+    keywords: [부모님, 아버지, 어머니, 아버님, 어머님, 부친, 모친, 형제, 자매, 남매, 외동, 장남, 장녀, 가족 관계, 가족관계, 가정 환경, 가정환경]
+    patterns: ["가족\\s*(구성|사항|중에|분들)"]
+    allow: [가족 같은, 가족같은]
+
+  - code: marriage
+    label: 결혼·출산
+    description: 혼인 여부, 결혼·임신·출산·육아 계획
+    profile_keys: [marriage, maritalStatus, married, children, 결혼, 혼인, 자녀]
+    keywords: [결혼, 혼인, 기혼, 미혼, 이혼, 배우자, 남편, 임신, 출산, 육아, 자녀, 남자친구, 여자친구]
+    patterns: ["(?<![가-힣])아내", "아이(가|를)\\s*(있|낳|가질|키우)"]   # "알아내다" 오탐 방지
+
+  - code: origin
+    label: 출신 지역
+    description: 출신 지역·국적·민족
+    profile_keys: [hometown, birthplace, origin, nationality, 출신지, 본적, 고향, 국적]
+    keywords: [고향, 본적, 출신지, 출신 지역, 사투리, 인종]
+    patterns: ["(?<![가-힣])국적", "어디\\s*출신", "어느\\s*지역\\s*(사람|출신)"]
+
+  - code: religion
+    label: 종교
+    description: 종교와 신앙 활동
+    profile_keys: [religion, 종교]
+    keywords: [종교, 교회, 성당, 기독교, 천주교, 불교, 이슬람, 신앙, 예배]
+    patterns: []
+
+  - code: politics
+    label: 정치
+    description: 정치 성향, 지지 정당, 노동조합에 대한 입장
+    profile_keys: [politics, politicalView, 정치성향]
+    keywords: [정치 성향, 정치성향, 지지 정당, 지지하는 정당, 지지하는 후보, 진보 성향, 보수 성향, 노동조합, 노조]
+    patterns: ["(여당|야당)(을|를|에)"]
+
+  - code: physical
+    label: 신체 조건
+    description: 키, 몸무게, 외모, 건강·병력(직무와 무관한 것)
+    profile_keys: [height, weight, bloodType, appearance, physical, 키, 몸무게, 체중, 신장, 혈액형, 병력]
+    keywords: [몸무게, 체중, 외모, 용모, 혈액형, 병력, 지병]
+    patterns: ["키(가|는)\\s*(몇|얼마|크|작)", "\\d{3}\\s*(cm|센티)", "\\d{2,3}\\s*(kg|킬로)"]
+
+  - code: property
+    label: 재산
+    description: 본인·가족의 재산, 주거 형태
+    profile_keys: [property, assets, housing, 재산, 주거]
+    keywords: [부동산, 월세, 집안 형편, 경제 형편]
+    patterns: ["(?<![가-힣])재산(?!권)", "(?<![가-힣])자가\\s*(주택|소유|에\\s*거주)", "전세(로|에|집|\\s*살)"]   # "지식재산권", "지원자가", "전세계" 오탐 방지

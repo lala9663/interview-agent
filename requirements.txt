@@ -1,0 +1,14 @@
+# 실행에 필요한 직접 의존성(버전 고정). 전체 고정 목록(간접 의존성 포함)은 requirements.lock.txt
+fastapi==0.162.5
+uvicorn==0.54.0
+websockets==17.4
+pydantic==2.14.3
+pydantic-settings==2.16.3
+langchain-core==1.8.0
+langgraph==1.2.21
+langchain-openai==1.7.4
+httpx==0.28.1
+redis==8.1.0
+PyYAML==6.0.3
+numpy==2.5.4
+PyJWT==2.15.1
