@@ -1,4 +1,4 @@
-"""백엔드 → Agent 내부 REST (계약 4장). 모두 동기 호출이고 상태를 남기지 않는다(finalize만 방 상태를 건드린다)."""
+"""백엔드 → Agent 내부 REST (API 명세 4장). 모두 동기 호출이고 상태를 남기지 않는다(finalize만 방 상태를 건드린다)."""
 
 from __future__ import annotations
 
@@ -81,5 +81,5 @@ async def blind_check(body: BlindCheckRequest, c: Container = Depends(get_contai
 
 @router.get("/stats")
 async def stats(c: Container = Depends(get_container)) -> dict:
-    """운영·부하 테스트용(계약 밖의 추가 경로): 방 수, 큐 깊이, provider 호출 수."""
+    """운영·부하 테스트용(API 명세 4장): 방 수, 큐 깊이, provider 호출 수. 백엔드의 운영 현황이 읽는다."""
     return c.rooms.stats()

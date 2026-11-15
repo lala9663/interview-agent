@@ -320,10 +320,11 @@ class RoomSession:
         followup = await self.matcher.best(text, kinds=(KIND_FOLLOWUP,))
         p_sim = prepared.similarity if prepared and prepared.candidate.question_id is not None else -1.0
         ref = followup.candidate.ref if followup else None
-        if ref and followup.similarity >= threshold and followup.similarity > p_sim:
-            if ref not in self.followups.matched:  # 같은 꼬리질문을 다시 말해도 한 번만 알린다
-                self.followups.matched.add(ref)
-                await self.emit(events.followup_matched(utt.seq, ref, followup.similarity))
+        # 이미 채택된 꼬리질문은 다시 알리지 않는다(한 후보에 한 번). 그 말이 준비된 질문과도 비슷하면 그쪽으로 잡는다.
+        fresh = bool(ref) and ref not in self.followups.matched
+        if fresh and followup.similarity >= threshold and followup.similarity > p_sim:
+            self.followups.matched.add(ref)
+            await self.emit(events.followup_matched(utt.seq, ref, followup.similarity))
         elif p_sim >= threshold:
             utt.matched_question_id = prepared.candidate.question_id
             self.asked_question_ids.add(utt.matched_question_id)

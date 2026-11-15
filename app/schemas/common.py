@@ -1,4 +1,4 @@
-"""계약 공통 타입: camelCase 모델과 열거형 (docs/contract/api-contract.md 1장)."""
+"""API 명세 공통 타입: camelCase 모델과 열거형 (docs/contract/api-contract.md 1장)."""
 
 from __future__ import annotations
 
@@ -52,9 +52,9 @@ class Speaker(str, Enum):
 
 
 class SpeakerMethod(str, Enum):
-    """계약의 SpeakerMethod. 규칙 판정(RULE)은 계약에 값이 없어 내부 전용이다.
+    """API 명세의 SpeakerMethod. 규칙 판정(RULE)도 API 명세에 있는 값이다.
 
-    밖으로 나갈 때는 `wire_speaker_method()`가 RULE을 설정값(기본 RULE, 계약에 있는 값)으로 내보낸다.
+    밖으로 나갈 때는 `wire_speaker_method()`가 RULE을 설정값(기본 RULE, API 명세에 있는 값)으로 내보낸다.
     """
 
     MANUAL = "MANUAL"
@@ -62,7 +62,7 @@ class SpeakerMethod(str, Enum):
     LLM = "LLM"
     CHANNEL = "CHANNEL"
     NONE = "NONE"
-    RULE = "RULE"  # 내부 전용
+    RULE = "RULE"  # 말투 규칙으로 판정(밖으로 나가는 값은 SPEAKER_RULE_WIRE_METHOD 로 바꿀 수 있다)
 
 
 def wire_speaker_method(method: SpeakerMethod | str, rule_as: str = "RULE") -> str:

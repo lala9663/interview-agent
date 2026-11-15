@@ -5,7 +5,7 @@
 한 대일 때는 MemoryEventBus로 같은 코드 경로를 탄다.
 
 채널:
-  events(room)  : 서버 → 클라이언트 이벤트(계약 3.2). 모든 인스턴스의 허브가 구독해 자기 단말에 보낸다
+  events(room)  : 서버 → 클라이언트 이벤트(API 명세 3.2). 모든 인스턴스의 허브가 구독해 자기 단말에 보낸다
   control(room) : 클라이언트 → 방 주인 인스턴스로 가는 명령(role, utterance.fix, finalize 등)
 """
 

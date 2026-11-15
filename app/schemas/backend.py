@@ -1,4 +1,4 @@
-"""Agent → 백엔드 내부 REST 스키마 (계약 5장)."""
+"""Agent → 백엔드 내부 REST 스키마 (API 명세 5장)."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ class RoomContext(CamelModel):
 class UtteranceItem(CamelModel):
     seq: int
     speaker: Speaker
-    speaker_method: str  # 계약의 SpeakerMethod 문자열(RULE은 나가기 전에 바뀐다)
+    speaker_method: str  # API 명세의 SpeakerMethod 문자열(RULE은 나가기 전에 바뀐다)
     raw_text: str
     refined_text: str
     start_ms: int

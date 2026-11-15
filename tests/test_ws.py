@@ -1,4 +1,4 @@
-"""WebSocket 흐름(계약 3장)과 방 마무리 → 사후 STT → refined-transcript 콜백."""
+"""WebSocket 흐름(API 명세 3장)과 방 마무리 → 사후 STT → refined-transcript 콜백."""
 
 from __future__ import annotations
 

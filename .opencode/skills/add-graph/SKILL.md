@@ -9,7 +9,7 @@ description: 새 AI 작업(LLM을 쓰는 기능)을 더할 때 쓴다. 프롬프
 
 ## 0. 먼저 정할 것
 
-- 계약에 있는 API인가? 없으면 `change-api-contract` skill부터.
+- API 명세에 있는 API인가? 없으면 `change-api-contract` skill부터.
 - 면접 중에 도는가(빨라야 함 → `llm.fast`), 면접 전후인가(품질 → `llm.quality`)?
 - 지원자 자료나 전사가 입력으로 들어가는가? 그러면 블라인드 입력 필터·출력 검사가 필요하다.
 

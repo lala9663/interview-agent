@@ -24,8 +24,8 @@
 
 | 폴더 | 책임 | 주요 타입 |
 | --- | --- | --- |
-| `app/api/` | 내부 REST(계약 4장), 오류 형식, `X-Internal-Key` 검사 | `router`, `ApiError` |
-| `app/live/` | WebSocket(계약 3장), 방 파이프라인, 꼬리질문 시점, 사후 STT | `RoomManager`, `RoomSession`, `LocalHub`, `FollowUpScheduler` |
+| `app/api/` | 내부 REST(API 명세 4장), 오류 형식, `X-Internal-Key` 검사 | `router`, `ApiError` |
+| `app/live/` | WebSocket(API 명세 3장), 방 파이프라인, 꼬리질문 시점, 사후 STT | `RoomManager`, `RoomSession`, `LocalHub`, `FollowUpScheduler` |
 | `app/graphs/` | LangGraph 그래프 5종과 구조화 출력 | `GraphRunner`, `call_structured` |
 | `app/prompts/` | 작업별 프롬프트 | `build_*` |
 | `app/providers/` | 모델 인터페이스, 레지스트리, 구현 | `LLMProvider`, `STTProvider`, `ProviderSet` |
@@ -34,7 +34,7 @@
 | `app/speaker/` | 화자 판정 체인 | `SpeakerChain` |
 | `app/matching/` | 질문 유사도 | `QuestionMatcher` |
 | `app/state/` | 방 상태, 이벤트 중계 | `RoomStateStore`, `EventBus` |
-| `app/backend/` | 백엔드 호출(계약 5장)과 재시도 큐 | `BackendClient`, `BackendOutbox` |
+| `app/backend/` | 백엔드 호출(API 명세 5장)과 재시도 큐 | `BackendClient`, `BackendOutbox` |
 
 ## 3. 면접 전: 브리핑
 
@@ -67,7 +67,7 @@ feed(PCM) ─▶ AudioStore.append            (방 전체 음성을 모은다: �
 ```
 
 - 작업자는 방마다 두 개(STT 단계, 확정 단계)이고 순서를 지킨다. 방끼리는 서로 기다리지 않는다. 모델 호출 수는 provider의 프로세스 전역 세마포어로 제한된다.
-- 꼬리질문: 지원자 발화가 확정되고 1.5초(`LIVE_FOLLOWUP_DEBOUNCE_S`) 동안 새 말소리가 없으면 만든다. 그 사이에 다음 말이 시작되면 취소한다. `followup.request`가 오면 바로 만든다.
+- 꼬리질문: 지원자 발화가 확정되고 1.5초(`LIVE_FOLLOWUP_DEBOUNCE_S`) 동안 새 말소리가 없으면 만든다. 그 사이에 다음 말이 시작되면 취소한다. 이어진 지원자 말이 20자(`LIVE_FOLLOWUP_MIN_CHARS`)보다 짧으면 만들지 않는다. `followup.request`가 오면 바로 만든다.
 - 면접 흐름을 멈추지 않는 장치(큐 역압, 다듬기 건너뛰기, 저장 재시도)는 [concurrency.md](concurrency.md).
 
 ### 클라이언트 명령
@@ -87,7 +87,7 @@ feed(PCM) ─▶ AudioStore.append            (방 전체 음성을 모은다: �
 
 `POST /internal/v1/rooms/{roomId}/finalize` (`app/live/manager.py`):
 
-1. 남은 음성을 끝까지 처리한다: 청크 분할기를 비우고, 두 큐가 빌 때까지 기다리고, 백엔드 저장 큐를 비운다(제한 20초, `LIVE_FINALIZE_FLUSH_TIMEOUT_S`). 여기까지가 `flushed`.
+1. 남은 음성을 끝까지 처리한다: 청크 분할기를 비우고, 두 큐가 빌 때까지 기다리고(제한 20초, `LIVE_FINALIZE_FLUSH_TIMEOUT_S`), 백엔드 저장 큐를 비운다(그 뒤 최대 5초). 여기까지가 `flushed`.
 2. 방의 모든 단말을 닫힘 코드 1000으로 닫는다.
 3. `postStt: true`이고 모아 둔 음성이 있으면 사후 STT를 백그라운드로 시작하고 `202`를 돌려준다.
 4. 사후 STT(`app/live/post_stt.py`): 방 전체 음성을 다시 청크로 자르고(최대 28초) → `stt.post`로 전사 → 다듬기 → 화자 판정 → `PUT /internal/v1/rooms/{roomId}/refined-transcript`. 실시간 전사에서 사람이 고친 화자(MANUAL)는 시간이 겹치는 발화에 물려준다. seq는 1부터 다시 매긴다.

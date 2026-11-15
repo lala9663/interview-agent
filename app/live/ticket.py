@@ -1,4 +1,4 @@
-"""방 입장권: 백엔드가 발급한 HS256 JWT를 검증한다. 클레임: sub, name, roomId, audio, exp (계약 2.7)."""
+"""방 입장권: 백엔드가 발급한 HS256 JWT를 검증한다. 클레임: sub, name, roomId, audio, exp (API 명세 2.7)."""
 
 from __future__ import annotations
 

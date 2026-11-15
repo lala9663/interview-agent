@@ -1,4 +1,4 @@
-"""WebSocket 이벤트 (계약 3장). 서버 → 클라이언트 이벤트는 dict로 만들어 EventBus에 싣는다."""
+"""WebSocket 이벤트 (API 명세 3장). 서버 → 클라이언트 이벤트는 dict로 만들어 EventBus에 싣는다."""
 
 from __future__ import annotations
 

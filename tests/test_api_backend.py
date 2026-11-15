@@ -1,4 +1,4 @@
-"""REST 계약 모양(camelCase)과 백엔드 클라이언트·재시도 큐."""
+"""REST API 명세 모양(camelCase)과 백엔드 클라이언트·재시도 큐."""
 
 from __future__ import annotations
 

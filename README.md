@@ -71,7 +71,7 @@ app/
   main.py          FastAPI 앱
   container.py     객체 조립(설정 → provider, 그래프, 방 관리자)
   settings/        섹션별 설정(환경변수)
-  schemas/         계약 타입: common(열거형), internal(4장), backend(5장), ws(3장)
+  schemas/         API 명세 타입: common(열거형), internal(4장), backend(5장), ws(3장)
   api/             내부 REST(4장)와 오류 형식
   providers/       LLM·STT·Embedding 인터페이스, 레지스트리, 구현(fake, openai_compatible, openai_http, whisper_http)
   prompts/         작업별 프롬프트(버전 포함)
@@ -87,7 +87,7 @@ app/
 config/            providers.yaml, blind_rules.yaml
 scripts/           make_ticket, ws_demo_client, load_test, eval_speaker, gen_speaker_fixture
 tests/             pytest (fixtures/ 에 화자 평가용 합성 대화)
-docs/              설계·운영 문서, contract/ 에 계약 복사본
+docs/              설계·운영 문서, contract/ 에 API 명세 복사본
 .opencode/skills/  OpenCode용 작업 절차
 AGENTS.md          OpenCode가 읽는 규칙
 ```
@@ -105,4 +105,4 @@ AGENTS.md          OpenCode가 읽는 규칙
 | [docs/blind-rules.md](docs/blind-rules.md) | 블라인드/금지 질문 규칙과 바꾸는 법 |
 | [docs/prompts.md](docs/prompts.md) | 프롬프트 목록과 규칙 |
 | [docs/open-questions.md](docs/open-questions.md) | 가정으로 구현한 것과 바꿀 위치 |
-| [docs/contract/api-contract.md](docs/contract/api-contract.md) | API 계약(세 레포 공통 원본의 복사본) |
+| [docs/contract/api-contract.md](docs/contract/api-contract.md) | API 명세(세 레포 공통 원본의 복사본) |

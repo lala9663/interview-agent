@@ -1,4 +1,4 @@
-"""WebSocket `/ws/v1/rooms/{roomId}` (계약 3장).
+"""WebSocket `/ws/v1/rooms/{roomId}` (API 명세 3장).
 
 연결 → 5초 안에 `auth` → `ready` → (마이크 단말이면 바이너리 오디오) / 텍스트 명령.
 이벤트 방송은 hub가, 방 파이프라인은 RoomSession이 맡는다. 여기서는 연결의 수명만 다룬다.

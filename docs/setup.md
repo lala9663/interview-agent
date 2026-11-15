@@ -43,7 +43,7 @@ curl -X POST http://localhost:8000/internal/v1/blind/check -H "X-Internal-Key: d
 | `ROOM_TICKET_SECRET` | 백엔드의 값과 같게(32바이트 이상) |
 | `APP_CORS_ORIGINS` | 프론트 주소(기본 `http://localhost:5173`) |
 
-- 포트는 8000이다(계약의 `agentWsUrl`이 `ws://localhost:8000/ws/v1/rooms/{roomId}`).
+- 포트는 8000이다(API 명세의 `agentWsUrl`이 `ws://localhost:8000/ws/v1/rooms/{roomId}`).
 - 백엔드가 아직 없으면 `BACKEND_MODE=fake`로 두고 `scripts/make_ticket.py --room 9001 --audio`로 입장권을 만들어 프론트에 넣어 볼 수 있다.
 
 ## 4. 사내 모델 연결
@@ -72,6 +72,6 @@ APP_INSTANCE_ID=agent-1          # 인스턴스마다 다르게
 | 경로 | 내용 |
 | --- | --- |
 | `GET /health` | `{"status":"UP","llm":"<impl>","stt":"<impl>"}` |
-| `GET /internal/v1/stats` (`X-Internal-Key`) | 방 수, 방별 큐 깊이, provider 호출·실패·대기 수, 백엔드 재시도 큐 길이. 계약에 없는 운영용 경로다 |
+| `GET /internal/v1/stats` (`X-Internal-Key`) | 방 수, 방별 큐 깊이, provider 호출·실패·대기 수, 백엔드 재시도 큐 길이. 운영용 경로이고 API 명세 4장에 있다(백엔드의 운영 현황 화면이 읽는다) |
 
 로그에는 방 번호·seq·오류만 남긴다. 지원자 자료와 전사 내용은 남기지 않는다(fake 백엔드의 데모 로그 제외).

@@ -99,7 +99,7 @@ class SpeakerSettings(BaseSettings):
     question_match_threshold: float = 0.55
     rule_min_confidence: float = 0.6
     llm_min_confidence: float = 0.6
-    rule_wire_method: str = "RULE"  # 규칙 판정이 밖으로 나가는 값(계약의 SpeakerMethod.RULE)
+    rule_wire_method: str = "RULE"  # 규칙 판정이 밖으로 나가는 값(API 명세의 SpeakerMethod.RULE)
 
 
 class MatchingSettings(BaseSettings):

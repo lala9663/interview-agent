@@ -1,4 +1,4 @@
-"""백엔드 클라이언트 (계약 5장). Agent는 DB에 닿지 않고, 저장은 모두 이 인터페이스로 백엔드에 맡긴다.
+"""백엔드 클라이언트 (API 명세 5장). Agent는 DB에 닿지 않고, 저장은 모두 이 인터페이스로 백엔드에 맡긴다.
 
 - `HttpBackendClient`: 실제 백엔드(`BACKEND_MODE=http`)
 - `FakeBackendClient`: 단독 실행·테스트용(`BACKEND_MODE=fake`). context는 데모 데이터, 저장은 메모리와 로그에만

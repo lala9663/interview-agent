@@ -1,4 +1,4 @@
-"""백엔드 → Agent 내부 REST 스키마 (계약 4장)."""
+"""백엔드 → Agent 내부 REST 스키마 (API 명세 4장)."""
 
 from __future__ import annotations
 
@@ -180,7 +180,7 @@ class FinalizeResponse(CamelModel):
     audio_retention: AudioRetention
 
 
-# ---------- blind/check (응답 모양은 계약에 없어 이 레포에서 정함: docs/open-questions.md) ----------
+# ---------- blind/check (API 명세 4장. 처음에는 이 레포에서 정했다: docs/open-questions.md) ----------
 class BlindCheckRequest(CamelModel):
     texts: list[str] = Field(default_factory=list)
 

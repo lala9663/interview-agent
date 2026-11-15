@@ -1,4 +1,4 @@
-"""오류 응답을 계약 형식 `{code, message, details}`로 맞춘다 (계약 1장)."""
+"""오류 응답을 API 명세 형식 `{code, message, details}`로 맞춘다 (API 명세 1장)."""
 
 from __future__ import annotations
 
