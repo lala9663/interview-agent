@@ -34,7 +34,7 @@
 | `finalize` 뒤 방의 단말을 닫힘 코드 1000으로 닫는다 | `app/live/manager.py`의 `_finalize_local` |
 | `finalize` 응답은 남은 음성 처리와 저장이 끝난 뒤(최대 20초) 돌려준다. 백엔드가 응답을 받고 바로 LIVE 기준 평가를 시작하기 때문이다 | `LIVE_FINALIZE_FLUSH_TIMEOUT_S` |
 | 보정 전사의 seq는 1부터 다시 매긴다(실시간 전사의 seq와 다를 수 있다). 백엔드는 전사를 통째로 바꾸고 AI 평가를 보정 전사로 다시 한다(계약 5장) | `app/live/post_stt.py`의 `build_refined_transcript` |
-| 사후 STT가 실패해도 음성은 지운다(`MEMORY_ONLY`) | `app/live/post_stt.py`의 `run_post_stt`의 `finally` |
+| 사후 STT가 실패하면 음성을 30분 동안 메모리에 붙잡고 다시 시도한 뒤 지운다(`MEMORY_ONLY`, 디스크에 쓰지 않음). "녹음을 저장하지 않는다"는 원칙에서 이 시간이 허용되는지 현업·보안 확인이 필요하다 | `LIVE_POST_STT_HOLD_MINUTES`(0이면 즉시 지움), `app/live/post_stt.py`의 `run_post_stt` |
 | 꼬리질문은 지원자 말이 끝나고 1.5초 조용하면 만든다. 그 전에 다음 말이 시작되면 만들지 않는다 | `LIVE_FOLLOWUP_DEBOUNCE_S`, `app/live/followups.py` |
 | 꼬리질문 id는 `f-<기준 seq>-<번호>` | `app/live/followups.py` |
 | 60분 면접 전사 전체가 LLM 문맥에 한 번에 들어간다 | 안 들어가면 `app/graphs/evaluation.py`, `report.py`에 나누어 요약하는 단계 |

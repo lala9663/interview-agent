@@ -57,6 +57,7 @@ fake일 때 일어나는 일: fake STT는 음성 내용을 읽지 못하므로 `
 | `LIVE_MAX_CHUNK_WAIT_S` | `20` | 이보다 오래 기다린 청크는 실시간 전사를 건너뛴다(사후 STT가 채운다) |
 | `LIVE_REFINE_TIMEOUT_S`, `LIVE_FOLLOWUP_DEBOUNCE_S` | `4.0`, `1.5` | 다듬기 제한 시간, 꼬리질문 대기 시간 |
 | `LIVE_POST_STT_CONCURRENT_ROOMS` | `2` | 사후 STT를 동시에 돌리는 방 수 |
+| `LIVE_POST_STT_HOLD_MINUTES`, `LIVE_POST_STT_RETRY_INTERVAL_S` | `30`, `60` | 사후 STT가 실패하면 음성을 붙잡고 다시 시도하는 시간과 간격. `0`이면 실패 즉시 버린다 |
 | `SPEAKER_CHAIN` | `manual,channel,question_match,rule,llm` | 화자 판정 순서. [docs/speaker-separation.md](docs/speaker-separation.md) |
 | `SPEAKER_QUESTION_MATCH_THRESHOLD`, `MATCHING_THRESHOLD` | `0.55`, `0.55` | 질문 유사도 기준 |
 | `BLIND_RULES_FILE` | `config/blind_rules.yaml` | 금지 항목 규칙. [docs/blind-rules.md](docs/blind-rules.md) |

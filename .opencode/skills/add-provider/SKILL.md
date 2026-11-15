@@ -5,7 +5,7 @@ description: LLM·STT·임베딩 provider를 새로 더하거나, fake에서 사
 
 # provider 더하기 / 바꾸기
 
-모델 호출은 모두 `app/providers/`의 인터페이스를 거친다. 역할은 네 가지다.
+모델 호출은 모두 `app/providers/`의 인터페이스를 거친다. 역할은 네 가지이고, 임베딩은 선택이다.
 
 | 역할 | 쓰는 곳 | 인터페이스 |
 | --- | --- | --- |
@@ -52,6 +52,7 @@ description: LLM·STT·임베딩 provider를 새로 더하거나, fake에서 사
 - [ ] `pytest` 통과
 - [ ] `GET /health`에 새 impl 이름이 보인다
 - [ ] 키가 코드·YAML·로그에 없다
+- [ ] 모델 서버를 일부러 내렸다 올려 본다: `status`가 `DOWN`이 되고, `cooldown_s` 뒤에 스스로 돌아온다
 - [ ] 실패했을 때 `ProviderError`로 올라오고(REST는 502 `MODEL_FAILED`, WebSocket은 `STT_FAILED` / `LLM_FAILED`) 면접 흐름은 이어진다
 - [ ] STT를 바꿨으면 `ready.sttModel`과 `refined-transcript`의 `sttModel`이 기대한 이름이다
 - [ ] 한국어 고유명사 힌트(`SttRequest.prompt`)를 모델이 받는지, 무음에서 지어내는 문장이 있으면 `drop_phrases`에 넣었는지

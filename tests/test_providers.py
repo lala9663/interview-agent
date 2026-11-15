@@ -135,6 +135,60 @@ async def test_retry_then_success_and_final_failure():
     assert always.failures == 2 and always.health == "DEGRADED"
 
 
+async def test_breaker_stops_calling_dead_model_then_probes_and_recovers():
+    import asyncio
+
+    from app.providers.base import ProviderDown
+
+    stt = FakeSTTProvider(RoleConfig(role="stt.live", impl="fake", max_retries=5, backoff_base_s=0.001, cooldown_s=0.15,
+                                     options={"fail_every": 1}))
+    with pytest.raises(ProviderError):
+        await stt.transcribe(SttRequest(pcm=b"\0\0"))
+    assert stt.failures == 3 and stt.health == "DOWN"  # 세 번 실패하면 남은 재시도를 하지 않는다
+    with pytest.raises(ProviderDown):  # 쉬는 동안에는 부르지 않고 바로 실패한다
+        await stt.transcribe(SttRequest(pcm=b"\0\0"))
+    assert stt.failures == 3 and stt.skipped == 1
+
+    await asyncio.sleep(0.2)  # 쉬는 시간이 지나면 한 번만 시험한다(재시도 없이). 실패하면 다시 쉰다
+    with pytest.raises(ProviderError):
+        await stt.transcribe(SttRequest(pcm=b"\0\0"))
+    assert stt.failures == 4
+    with pytest.raises(ProviderDown):
+        await stt.transcribe(SttRequest(pcm=b"\0\0"))
+
+    stt.config.options["fail_every"] = 0  # 모델이 살아났다
+    await asyncio.sleep(0.2)
+    assert (await stt.transcribe(SttRequest(pcm=b"\0\0"))).text
+    assert stt.health == "OK"
+    assert (await stt.transcribe(SttRequest(pcm=b"\0\0"))).text  # 다시 평소처럼 부른다
+
+
+async def test_breaker_lets_only_one_probe_through():
+    import asyncio
+
+    from app.providers.base import ProviderDown
+
+    stt = FakeSTTProvider(RoleConfig(role="stt.live", impl="fake", max_retries=2, backoff_base_s=0.001, cooldown_s=0.05,
+                                     options={"fail_every": 1}))
+    with pytest.raises(ProviderError):
+        await stt.transcribe(SttRequest(pcm=b"\0\0"))
+    stt.config.options.update(fail_every=0, latency_ms=100)
+    await asyncio.sleep(0.1)
+    probe = asyncio.create_task(stt.transcribe(SttRequest(pcm=b"\0\0", session="a")))
+    await asyncio.sleep(0.01)
+    with pytest.raises(ProviderDown):  # 시험 호출이 나가 있는 동안 다른 호출은 기다리지 않고 실패한다
+        await stt.transcribe(SttRequest(pcm=b"\0\0", session="b"))
+    assert (await probe).text and stt.health == "OK"
+
+
+async def test_breaker_can_be_turned_off():
+    stt = FakeSTTProvider(RoleConfig(role="stt.live", impl="fake", max_retries=4, backoff_base_s=0.001, cooldown_s=0,
+                                     options={"fail_every": 1}))
+    with pytest.raises(ProviderError):
+        await stt.transcribe(SttRequest(pcm=b"\0\0"))
+    assert stt.failures == 5 and stt.skipped == 0
+
+
 async def test_semaphore_limits_concurrency():
     import asyncio
 

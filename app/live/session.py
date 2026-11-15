@@ -20,7 +20,7 @@ from app.audio.chunker import AudioChunk, SpeechChunker
 from app.live.deps import LiveDeps, PendingUtterance, Utterance, glossary_from_context
 from app.live.followups import FollowUpScheduler
 from app.matching.matcher import KIND_BANK, KIND_PREPARED, MatchCandidate, QuestionMatcher
-from app.providers.base import ProviderBusy, ProviderError, SttRequest
+from app.providers.base import ProviderBusy, ProviderDown, ProviderError, SttRequest
 from app.schemas import ws as events
 from app.schemas.backend import BackendEvent, RoomContext, UtterancesRequest
 from app.schemas.common import Speaker, SpeakerMethod
@@ -243,6 +243,9 @@ class RoomSession:
             except ProviderBusy:  # STT 자리가 나지 않았다(전체가 밀려 있다)
                 self.dropped_chunks += 1
                 await self._notify_overload()
+            except ProviderDown:  # 차단기가 쉬는 중: 청크마다 같은 오류를 보내지 않고 상태(DOWN)로 알린다
+                self.dropped_chunks += 1
+                await self.emit_status(force=True)
             except ProviderError as exc:
                 log.warning("room %s STT 실패: %s", self.room_id, exc)
                 await self.emit(events.error(events.STT_FAILED, "음성 인식에 실패했습니다. 이 구간은 면접 뒤 보정본에서 채워집니다.", True))

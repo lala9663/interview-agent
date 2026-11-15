@@ -130,5 +130,10 @@ fake 모델에 위 가정 지연을 넣어 방 20개를 돌린 측정값은 [con
 - 실시간에서 밀려서 건너뛴 구간, STT가 실패한 구간도 여기서 채워진다.
 - 다듬기와 화자 판정을 다시 한다. 실시간 전사에서 사람이 고친 화자(MANUAL)는 시간이 절반 넘게 겹치는 발화에 물려준다.
 - 결과를 `PUT refined-transcript`로 보낸다. seq는 1부터 다시 매긴다(실시간 전사의 seq와 같지 않을 수 있다).
-- 2번 시도해 실패하면 `POST_STT_FAILED` 이벤트를 보낸다. 어느 경우든 끝나면 음성을 놓아 준다.
+- 2번 시도해 실패하면 `POST_STT_FAILED` 이벤트를 보내고(`data.willRetry: true`), 음성을 버리지 않고 `LIVE_POST_STT_HOLD_MINUTES`(기본 30분) 동안 붙잡은 채 `LIVE_POST_STT_RETRY_INTERVAL_S`(기본 60초)마다 다시 시도한다. 성공하면 평소처럼 `PUT refined-transcript`를 보낸다(백엔드는 늦게 와도 받는다).
+  - 붙잡는 곳은 AudioStore 그대로다. `MEMORY_ONLY`면 메모리에만 있고 디스크에 쓰지 않는다. 서버가 내려가면 사라진다.
+  - 그 시간이 지나도 안 되면 `POST_STT_FAILED`를 한 번 더 보내고(`data.willRetry: false`) 음성을 놓아 준다. 이때 보고서는 실시간 전사 기준(`LIVE`)으로 남는다.
+  - 기다리는 동안에는 동시 실행 자리(`LIVE_POST_STT_CONCURRENT_ROOMS`)를 쥐지 않는다. 다만 음성은 메모리에 남으므로, Whisper가 오래 죽어 있으면 끝난 방의 음성이 최대 30분치 쌓인다(30분 면접 한 방에 약 58MB). 메모리가 빠듯하면 값을 줄이거나 `AUDIO_STORE=file`을 쓴다.
+  - `LIVE_POST_STT_HOLD_MINUTES=0`이면 붙잡지 않고 실패 즉시 놓아 준다.
+- 어느 경우든 끝나면 음성을 놓아 준다.
 - `finalize`가 오지 않은 방은 마이크가 끊긴 뒤 30분(`LIVE_IDLE_CLOSE_MINUTES`)이 지나면 같은 절차로 정리한다.

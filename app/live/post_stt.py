@@ -3,12 +3,17 @@
 실시간 전사와 다른 점: 밀려서 버린 청크가 없고, 청크를 더 길게(최대 28초) 잡아 문맥이 넓고, `stt.post` 역할의
 모델·동시 실행 수를 따로 쓴다. 끝나면 `PUT refined-transcript`를 부르고 음성을 놓아 준다
 (MEMORY_ONLY면 삭제, KEEP이면 파일로 보관).
+
+실패했을 때: 음성을 바로 버리면 실시간에 건너뛴 구간을 채울 길이 없어진다. 그래서 `LIVE_POST_STT_HOLD_MINUTES` 동안
+음성을 AudioStore에 그대로 둔 채(MEMORY_ONLY면 메모리에만) `LIVE_POST_STT_RETRY_INTERVAL_S`마다 다시 시도한다.
+그 시간이 지나도 안 되면 음성을 놓아 준다. 기다리는 동안에는 동시 실행 자리(gate)를 쥐고 있지 않는다.
 """
 
 from __future__ import annotations
 
 import asyncio
 import logging
+import time
 from dataclasses import dataclass, replace
 
 from app.audio.chunker import AudioChunk, SpeechChunker
@@ -117,27 +122,61 @@ async def build_refined_transcript(session: RoomSession) -> RefinedTranscriptReq
     return RefinedTranscriptRequest(stt_model=stt.model, items=[u.to_item(rule_as) for u in items])
 
 
-async def run_post_stt(session: RoomSession) -> bool:
-    """사후 STT를 돌리고 콜백을 보낸다. 성공하면 True. 어떤 경우에도 끝나면 음성을 놓아 준다."""
+async def _try_post_stt(session: RoomSession) -> tuple[bool, str]:
+    """사후 STT를 `post_stt_max_attempts`번까지 해 본다. (성공했는가, 실패 이유)."""
     deps, room_id = session.deps, session.room_id
     error = "모아 둔 음성이 없습니다."
-    try:
-        for attempt in range(1, deps.settings.live.post_stt_max_attempts + 1):
-            try:
-                body = await build_refined_transcript(session)
-                if body is None:
-                    break
-                deps.outbox.put_refined_transcript(room_id, body)
-                log.info("room %s 사후 STT 완료: 발화 %d건", room_id, len(body.items))
-                return True
-            except asyncio.CancelledError:
-                raise
-            except Exception as exc:  # noqa: BLE001
-                error = repr(exc)
-                log.warning("room %s 사후 STT 실패 (%d번째): %r", room_id, attempt, exc)
+    for attempt in range(1, deps.settings.live.post_stt_max_attempts + 1):
+        try:
+            body = await build_refined_transcript(session)
+            if body is None:
+                return False, error
+            deps.outbox.put_refined_transcript(room_id, body)
+            log.info("room %s 사후 STT 완료: 발화 %d건", room_id, len(body.items))
+            return True, ""
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            error = repr(exc)
+            log.warning("room %s 사후 STT 실패 (%d번째): %r", room_id, attempt, exc)
+            if attempt < deps.settings.live.post_stt_max_attempts:
                 await asyncio.sleep(min(10.0, 2.0 * attempt))
-        deps.outbox.post_event(room_id, BackendEvent(type="POST_STT_FAILED", message="사후 STT에 실패했습니다.",
-                                                     data={"error": error[:300]}))
-        return False
+    return False, error
+
+
+def _failed_event(error: str, *, will_retry: bool, hold_minutes: int) -> BackendEvent:
+    message = (f"사후 STT에 실패했습니다. 음성을 {hold_minutes}분 동안 붙잡고 다시 시도합니다." if will_retry
+               else "사후 STT에 실패했습니다.")
+    return BackendEvent(type="POST_STT_FAILED", message=message,
+                        data={"error": error[:300], "willRetry": will_retry, "holdMinutes": hold_minutes})
+
+
+async def run_post_stt(session: RoomSession, gate: asyncio.Semaphore | None = None) -> bool:
+    """사후 STT를 돌리고 콜백을 보낸다. 성공하면 True. 어떤 경우에도 끝나면 음성을 놓아 준다.
+
+    gate는 동시에 도는 방 수를 묶는 세마포어다. 시도하는 동안에만 쥐고, 다시 시도하려고 기다릴 때는 놓는다.
+    """
+    deps, room_id = session.deps, session.room_id
+    live = deps.settings.live
+    gate = gate or asyncio.Semaphore(1)
+    deadline = time.monotonic() + live.post_stt_hold_minutes * 60
+    reported = False
+    try:
+        while True:
+            async with gate:
+                ok, error = await _try_post_stt(session)
+            if ok:
+                return True
+            has_audio = await deps.audio_store.duration_ms(room_id) > 0
+            wait = min(live.post_stt_retry_interval_s, deadline - time.monotonic())
+            if not has_audio or wait <= 0:
+                deps.outbox.post_event(room_id, _failed_event(error, will_retry=False, hold_minutes=0))
+                return False
+            if not reported:  # 처음 실패했을 때 한 번 알린다(다시 시도한다는 것과 함께)
+                deps.outbox.post_event(room_id, _failed_event(error, will_retry=True,
+                                                              hold_minutes=live.post_stt_hold_minutes))
+                reported = True
+            log.warning("room %s 사후 STT: 음성을 붙잡고 %.0f초 뒤 다시 시도한다", room_id, wait)
+            await asyncio.sleep(wait)
     finally:
         await deps.audio_store.release(room_id)

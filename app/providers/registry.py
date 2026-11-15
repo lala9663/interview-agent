@@ -32,7 +32,7 @@ EMBEDDING_IMPLS: dict[str, str] = {
 }
 
 ENV_PREFIX = "PROVIDERS__"
-_ROLE_KEYS = {"impl", "model", "max_concurrency", "timeout_s", "max_retries", "backoff_base_s", "options"}
+_ROLE_KEYS = {"impl", "model", "max_concurrency", "timeout_s", "max_retries", "backoff_base_s", "cooldown_s", "options"}
 
 
 def _load_class(table: dict[str, str], impl: str, kind: str) -> type:
@@ -89,6 +89,7 @@ def role_config(data: dict[str, Any], kind: str, role: str) -> RoleConfig:
         timeout_s=float(section.get("timeout_s", 30.0)),
         max_retries=int(section.get("max_retries", 2)),
         backoff_base_s=float(section.get("backoff_base_s", 0.5)),
+        cooldown_s=float(section.get("cooldown_s", 30.0)),
         options=dict(section.get("options") or {}),
     )
 

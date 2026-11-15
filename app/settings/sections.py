@@ -87,6 +87,8 @@ class LiveSettings(BaseSettings):
     status_interval_s: float = 5.0
     post_stt_refine: bool = True
     post_stt_max_attempts: int = 2
+    post_stt_hold_minutes: int = 30  # 사후 STT가 실패하면 음성을 이만큼 붙잡고 다시 시도한다. 0이면 바로 버린다
+    post_stt_retry_interval_s: float = 60.0  # 붙잡고 있는 동안 다시 시도하는 간격
     post_stt_concurrent_rooms: int = 2  # 사후 STT를 동시에 돌리는 방 수(방 음성 복사본이 그만큼만 생긴다)
     audio_lock_ttl_s: int = 30
 

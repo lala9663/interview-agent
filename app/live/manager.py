@@ -141,8 +141,8 @@ class RoomManager:
 
     async def _post_stt_then_cleanup(self, session: RoomSession) -> None:
         try:
-            async with self._post_sem:  # 여러 방이 한꺼번에 끝나도 메모리가 한 번에 불어나지 않게
-                await run_post_stt(session)  # 끝나면 음성을 놓아 준다
+            # 여러 방이 한꺼번에 끝나도 메모리가 한 번에 불어나지 않게 _post_sem으로 묶는다. 끝나면 음성을 놓아 준다
+            await run_post_stt(session, self._post_sem)
         except Exception:  # noqa: BLE001
             log.exception("room %s 사후 STT 작업 오류", session.room_id)
         finally:

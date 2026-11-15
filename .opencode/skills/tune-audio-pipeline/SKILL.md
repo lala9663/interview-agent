@@ -23,6 +23,8 @@ description: 실시간 전사가 늦다, 말이 중간에 잘린다, 잡음이 �
 | 방이 많으면 밀린다 / `OVERLOADED` | STT 동시 실행 수, 큐 한계 | `providers.yaml`의 `stt.live.max_concurrency`, `LIVE_STT_QUEUE_SOFT/HARD` |
 | final의 다듬기가 자주 빠진다(raw 그대로) | LLM이 제한 시간을 넘는다 | `LIVE_REFINE_TIMEOUT_S`(기본 4), `llm.fast.max_concurrency` |
 | 꼬리질문이 너무 빨리/늦게 뜬다 | 답이 끝났다고 보는 대기 시간 | `LIVE_FOLLOWUP_DEBOUNCE_S`(기본 1.5) |
+| 모델이 죽었다 살아났는데 한동안 전사가 안 나온다 | 차단기가 쉬는 시간 | `providers.yaml`의 `cooldown_s`(기본 30초) |
+| 면접이 끝날 때 Whisper가 죽어 있어 보정본이 안 생긴다 | 음성을 붙잡는 시간 | `LIVE_POST_STT_HOLD_MINUTES`(기본 30), `LIVE_POST_STT_RETRY_INTERVAL_S`(기본 60) |
 | 서버 메모리가 모자란다 | 방 음성 상한, 보관 방식 | `AUDIO_MAX_MINUTES_PER_ROOM`, `AUDIO_STORE=file`(디스크를 임시 공간으로) |
 
 설정의 원본은 `app/settings/sections.py`의 `AudioSettings`, `LiveSettings`다. 기본값을 바꾸면 README 표와 `docs/audio-pipeline.md`를 같이 고친다.

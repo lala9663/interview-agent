@@ -90,7 +90,7 @@ feed(PCM) ─▶ AudioStore.append            (방 전체 음성을 모은다: �
 2. 방의 모든 단말을 닫힘 코드 1000으로 닫는다.
 3. `postStt: true`이고 모아 둔 음성이 있으면 사후 STT를 백그라운드로 시작하고 `202`를 돌려준다.
 4. 사후 STT(`app/live/post_stt.py`): 방 전체 음성을 다시 청크로 자르고(최대 28초) → `stt.post`로 전사 → 다듬기 → 화자 판정 → `PUT /internal/v1/rooms/{roomId}/refined-transcript`. 실시간 전사에서 사람이 고친 화자(MANUAL)는 시간이 겹치는 발화에 물려준다. seq는 1부터 다시 매긴다.
-5. 끝나면 `AudioStore.release`: `MEMORY_ONLY`면 음성을 지운다. 실패하면 `POST_STT_FAILED` 이벤트를 백엔드에 보내고, 그때도 음성은 지운다.
+5. 끝나면 `AudioStore.release`: `MEMORY_ONLY`면 음성을 지운다. 실패하면 `POST_STT_FAILED` 이벤트를 백엔드에 보내고, 음성을 `LIVE_POST_STT_HOLD_MINUTES`(기본 30분) 동안 붙잡은 채 다시 시도한다. 그래도 안 되면 음성을 지운다(`docs/audio-pipeline.md`).
 
 백엔드는 `finalize` 응답을 받은 뒤 실시간 전사 기준(LIVE)으로 평가·보고서를 만들고, `refined-transcript`를 받으면 보정본(REFINED) 보고서를 만든다.
 

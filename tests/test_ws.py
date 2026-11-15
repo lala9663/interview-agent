@@ -266,8 +266,57 @@ def test_finalize_without_post_stt_discards_audio_immediately(client, container)
     assert container.audio_store.total_bytes() == 0 and container.backend.of("refined-transcript") == []
 
 
+def test_post_stt_failure_holds_audio_and_retries_until_model_recovers(client, container):
+    live = container.settings.live
+    live.post_stt_max_attempts, live.post_stt_hold_minutes, live.post_stt_retry_interval_s = 1, 1, 0.3
+    stt = container.providers.stt_post
+    stt.config.max_retries, stt.config.cooldown_s = 0, 0.05
+    mic = connect(client, audio=True)
+    recv_until(mic, lambda e: e["type"] == "status")
+    send_audio(mic, [(2.0, 1.0)])
+    recv_until(mic, lambda e: e["type"] == "transcript.final")
+    stt.config.options["fail_every"] = 1  # 면접이 끝날 때 Whisper가 죽어 있다
+    r = client.post(f"/internal/v1/rooms/{ROOM}/finalize", json={"postStt": True}, headers=INTERNAL)
+    assert r.json()["postSttScheduled"] is True
+    wait_for(lambda: len(container.backend.of("events", ROOM)) == 1, timeout=15)
+    event = container.backend.of("events", ROOM)[0]
+    assert event["type"] == "POST_STT_FAILED" and event["data"]["willRetry"] is True and event["data"]["holdMinutes"] == 1
+    assert container.audio_store.total_bytes() > 0  # 음성을 버리지 않고 붙잡고 있다
+    stt.config.options["fail_every"] = 0  # 모델이 살아났다
+    wait_for(lambda: len(container.backend.of("refined-transcript")) == 1, timeout=15)
+    wait_for(lambda: container.audio_store.total_bytes() == 0)  # 성공하면 놓아 준다
+    assert len(container.backend.of("events", ROOM)) == 1
+
+
+def test_post_stt_gives_up_after_hold_time_and_discards_audio(client, container):
+    live = container.settings.live
+    live.post_stt_max_attempts, live.post_stt_hold_minutes, live.post_stt_retry_interval_s = 1, 1, 0.2
+    stt = container.providers.stt_post
+    stt.config.max_retries, stt.config.cooldown_s = 0, 0.05
+    mic = connect(client, audio=True)
+    recv_until(mic, lambda e: e["type"] == "status")
+    send_audio(mic, [(2.0, 1.0)])
+    recv_until(mic, lambda e: e["type"] == "transcript.final")
+    stt.config.options["fail_every"] = 1
+    client.post(f"/internal/v1/rooms/{ROOM}/finalize", json={"postStt": True}, headers=INTERNAL)
+    wait_for(lambda: len(container.backend.of("events", ROOM)) == 1, timeout=15)
+    live.post_stt_hold_minutes = 0  # 설정은 시작할 때 읽었으므로 이 값으로는 안 끝난다. 아래에서 시각을 당긴다
+    import app.live.post_stt as post_stt
+
+    real = post_stt.time.monotonic
+    post_stt.time.monotonic = lambda: real() + 120  # 붙잡는 시간이 지난 것으로
+    try:
+        wait_for(lambda: len(container.backend.of("events", ROOM)) == 2, timeout=15)
+    finally:
+        post_stt.time.monotonic = real
+    assert container.backend.of("events", ROOM)[1]["data"]["willRetry"] is False
+    wait_for(lambda: container.audio_store.total_bytes() == 0)
+    assert container.backend.of("refined-transcript") == []
+
+
 def test_post_stt_failure_reports_event_and_still_discards_audio(client, container):
     container.settings.live.post_stt_max_attempts = 1
+    container.settings.live.post_stt_hold_minutes = 0  # 붙잡지 않는 설정
     mic = connect(client, audio=True)
     recv_until(mic, lambda e: e["type"] == "status")
     send_audio(mic, [(2.0, 1.0)])
