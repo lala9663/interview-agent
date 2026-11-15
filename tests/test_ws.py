@@ -132,6 +132,32 @@ def test_full_flow_auth_audio_partial_final_matched_followup(client, container):
         ws.close()
 
 
+def test_spoken_followup_is_matched_once(client, container):
+    """제안된 꼬리질문을 면접관이 비슷하게 말하면 followup.matched가 한 번 온다(누르지 않아도 채택)."""
+    from app.matching.matcher import KIND_FOLLOWUP, MatchCandidate
+
+    mic = connect(client, audio=True)
+    recv_until(mic, lambda e: e["type"] == "status")
+    send_audio(mic, [(2.0, 1.0), (4.0, 2.0)])  # 질문·답 → 꼬리질문 제안
+    recv_until(mic, lambda e: e["type"] == "followup.suggested")
+    # 대본의 다음 면접관 말(3번째 줄)과 조사만 다른 꼬리질문이 제안돼 있었다고 둔다
+    session = container.rooms.sessions[ROOM]
+    session.matcher.add([MatchCandidate(KIND_FOLLOWUP, "캡스톤 프로젝트에서 맡으신 역할은 무엇이었나요?", ref="f-2-9")])
+    # 준비된 질문(7001)도 이 말과 비슷하다. 꼬리질문 쪽이 더 비슷할 때만 꼬리질문으로 잡히는지 보려고 뺀다
+    session.matcher.replace([], keep_kinds=(KIND_FOLLOWUP,))
+
+    send_audio(mic, [(2.0, 1.0)])
+    events = recv_until(mic, lambda e: e["type"] == "followup.matched")
+    matched = events[-1]
+    assert set(matched) == {"type", "seq", "id", "similarity"}
+    assert matched["seq"] == 3 and matched["id"] == "f-2-9" and 0.55 <= matched["similarity"] <= 1.0
+    assert not [e for e in events if e["type"] == "question.matched"]
+    final = [e for e in events if e["type"] == "transcript.final"][-1]
+    assert final["speaker"] == "INTERVIEWER"
+    assert session.followups.matched == {"f-2-9"}
+    mic.close()
+
+
 def test_client_commands_role_fix_asked_request_ping(client, container):
     mic = connect(client, audio=True)
     recv_until(mic, lambda e: e["type"] == "status")

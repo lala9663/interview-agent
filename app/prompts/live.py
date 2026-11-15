@@ -6,14 +6,14 @@ from typing import Any
 
 from langchain_core.messages import BaseMessage
 
-from app.prompts.common import FAIRNESS, JSON_ONLY, build_messages, tag, transcript_block
+from app.prompts.common import FAIRNESS, JSON_ONLY, SMALL_TALK, build_messages, tag, transcript_block
 
 REFINE_TASK = "refine"
 REFINE_VERSION = "v1"
 SPEAKER_TASK = "speaker.judge"
 SPEAKER_VERSION = "v1"
 FOLLOWUP_TASK = "followup"
-FOLLOWUP_VERSION = "v1"
+FOLLOWUP_VERSION = "v2"  # v2: 사담이면 제안하지 않는다
 
 _REFINE = """
 너는 면접 음성 전사를 읽기 좋게 다듬는다. <utterance>는 음성 인식 결과 그대로다.
@@ -37,6 +37,7 @@ _FOLLOWUP = f"""
 - 답에서 나온 구체적인 말(수치, 역할, 선택의 이유, 어려웠던 점)을 짚는다. 답에 없는 내용을 전제로 하지 않는다.
 - <asked>에 있는 질문과 같은 것을 다시 묻지 않는다. 서로 다른 각도의 질문을 낸다.
 - 한 질문은 한 문장, 한 가지만 묻는다. rationale에는 왜 묻는지 짧게 적는다.
+- {SMALL_TALK} 마지막 지원자 말이 그런 말이면 질문을 만들지 않고 items를 빈 배열로 둔다.
 - {FAIRNESS}
 {JSON_ONLY}
 형식: {{"items": [{{"text": "", "rationale": ""}}]}}

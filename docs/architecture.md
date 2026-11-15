@@ -61,7 +61,7 @@ feed(PCM) ─▶ AudioStore.append            (방 전체 음성을 모은다: �
                                                         final_queue ─▶ [확정 작업자]
                                                                           ├─ 다듬기(refine 그래프) ∥ 화자 판정(SpeakerChain)
                                                                           ├─ transcript.final
-                                                                          ├─ 면접관 말이면 준비된 질문과 매칭 → question.matched
+                                                                          ├─ 면접관 말이면 준비된 질문·제안한 꼬리질문과 매칭 → question.matched 또는 followup.matched
                                                                           ├─ 백엔드 저장(BackendOutbox, 기다리지 않음)
                                                                           └─ 지원자 말이면 꼬리질문 타이머 시작
 ```
@@ -77,6 +77,7 @@ feed(PCM) ─▶ AudioStore.append            (방 전체 음성을 모은다: �
 | `role` | 그 뒤에 만들어지는 청크의 화자를 지정(MANUAL). `AUTO`면 자동 판정 |
 | `utterance.fix` | 발화의 화자를 고치고 `transcript.updated` 방송, 백엔드에 같은 seq로 다시 저장 |
 | `question.asked` | 한 질문으로 표시, 백엔드에 `QUESTION_ASKED` 이벤트. 모르는 질문 id면 context를 다시 읽는다 |
+| `question.added` | context를 다시 읽어 면접 중에 더한 질문을 비교 대상에 넣는다 |
 | `followup.request` | 꼬리질문을 바로 만든다 |
 | `ping` | 그 단말에만 `pong` |
 

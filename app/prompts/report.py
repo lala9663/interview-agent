@@ -6,14 +6,14 @@ from typing import Any
 
 from langchain_core.messages import BaseMessage
 
-from app.prompts.common import FAIRNESS, JSON_ONLY, build_messages, tag, transcript_block
+from app.prompts.common import FAIRNESS, JSON_ONLY, build_messages, small_talk_rule, tag, transcript_block
 
 BRIEF_TASK = "report.brief"
 OVERVIEW_TASK = "report.detailed.overview"
 COMPETENCY_TASK = "report.detailed.competencies"
 CAREER_TASK = "report.detailed.career"
 NEXT_TASK = "report.detailed.next"
-VERSION = "v1"
+VERSION = "v2"  # v2: 인성 면접이 아니면 사담은 보고서에 옮기지 않는다
 
 _COMMON = f"""
 너는 면접 보고서를 쓴다. 읽는 사람은 채용 담당자와 다음 차수 면접관이다.
@@ -58,6 +58,10 @@ risks는 채용 결정에서 살펴야 할 위험이다. <previous_rounds>에서
 """
 
 
+def _with_rule(instructions: str, ctx: dict[str, Any]) -> str:
+    return instructions + small_talk_rule(ctx.get("interview_type", ""), "그런 발화는 문답·강점·우려·근거로 옮기지 않는다.")
+
+
 def _base_parts(ctx: dict[str, Any]) -> list[str]:
     return [
         tag("track", ctx.get("track", "")), tag("interview_type", ctx.get("interview_type", "")),
@@ -70,20 +74,20 @@ def _base_parts(ctx: dict[str, Any]) -> list[str]:
 
 
 def build_brief(ctx: dict[str, Any]) -> list[BaseMessage]:
-    return build_messages(BRIEF_TASK, VERSION, _BRIEF, *_base_parts(ctx))
+    return build_messages(BRIEF_TASK, VERSION, _with_rule(_BRIEF, ctx), *_base_parts(ctx))
 
 
 def build_overview(ctx: dict[str, Any]) -> list[BaseMessage]:
-    return build_messages(OVERVIEW_TASK, VERSION, _OVERVIEW, *_base_parts(ctx))
+    return build_messages(OVERVIEW_TASK, VERSION, _with_rule(_OVERVIEW, ctx), *_base_parts(ctx))
 
 
 def build_competencies(ctx: dict[str, Any]) -> list[BaseMessage]:
-    return build_messages(COMPETENCY_TASK, VERSION, _COMPETENCY, *_base_parts(ctx))
+    return build_messages(COMPETENCY_TASK, VERSION, _with_rule(_COMPETENCY, ctx), *_base_parts(ctx))
 
 
 def build_career(ctx: dict[str, Any]) -> list[BaseMessage]:
-    return build_messages(CAREER_TASK, VERSION, _CAREER, *_base_parts(ctx))
+    return build_messages(CAREER_TASK, VERSION, _with_rule(_CAREER, ctx), *_base_parts(ctx))
 
 
 def build_next(ctx: dict[str, Any], overview: dict[str, Any]) -> list[BaseMessage]:
-    return build_messages(NEXT_TASK, VERSION, _NEXT, *_base_parts(ctx), tag("overview", overview))
+    return build_messages(NEXT_TASK, VERSION, _with_rule(_NEXT, ctx), *_base_parts(ctx), tag("overview", overview))

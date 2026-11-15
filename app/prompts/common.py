@@ -21,7 +21,27 @@ FAIRNESS = (
     "성별, 나이, 가족, 결혼·출산, 출신 지역, 종교, 정치 성향, 신체 조건, 재산처럼 직무와 무관한 개인 사항은 "
     "쓰지도 묻지도 않는다. 자료에 그런 내용이 있어도 옮기지 않는다."
 )
+SMALL_TALK = (
+    "면접 내용과 무관한 말(인사, 농담, 날씨·교통 같은 사담, 진행 안내)은 평가와 질문의 재료가 아니다."
+)
+PERSONALITY_SMALL_TALK = (
+    "인성 면접이다. 인사·농담·사담에서 드러난 태도와 소통 방식도 관찰한 사실로 쓸 수 있다. "
+    "면접관의 진행 안내는 재료가 아니다."
+)
 JSON_ONLY = "출력은 설명 없이 JSON 하나만 쓴다. 코드 블록 표시(```)를 붙이지 않는다."
+
+
+
+def small_talk_rule(interview_type: str, exclude: str) -> str:
+    """평가·보고서에서 사담을 재료에서 뺄지를 면접 종류로 정한다(지시문 끝에 붙이는 한 줄).
+
+    인성 면접(PERSONALITY)은 사담에서 드러나는 태도·소통도 보는 자리라 빼지 않는다. 그 밖의 면접은 뺀다.
+    꼬리질문은 면접 종류와 상관없이 사담에는 만들지 않는다(live.py).
+    """
+    if interview_type == "PERSONALITY":
+        return f"추가 규칙: {PERSONALITY_SMALL_TALK}"
+    return f"추가 규칙: {SMALL_TALK} {exclude}"
+
 
 _TAG_RE = re.compile(r"</?\s*[A-Za-z_][\w.-]*\s*>")
 

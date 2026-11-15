@@ -23,7 +23,7 @@ from app.schemas import ws as events
 
 log = logging.getLogger(__name__)
 router = APIRouter()
-_CONTROL_TYPES = {"role", "question.asked", "followup.request", "utterance.fix"}
+_CONTROL_TYPES = {"role", "question.asked", "question.added", "followup.request", "utterance.fix"}
 
 
 async def _reject(ws: WebSocket, code: str, message: str, close_code: int) -> None:

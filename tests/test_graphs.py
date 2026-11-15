@@ -112,6 +112,28 @@ def test_prompts_wrap_inputs_and_carry_guard():
     assert user.count("</jd>") == 1 and "<profile>" in user  # 자료 속 태그는 지워져 태그를 빠져나오지 못한다
 
 
+def test_prompts_tell_model_to_leave_small_talk_out():
+    """꼬리질문은 항상, 평가·보고서는 인성 면접이 아닐 때 사담을 재료로 쓰지 말라는 문장이 들어간다."""
+    from app.prompts import evaluation, live, report
+    from app.prompts.common import PERSONALITY_SMALL_TALK, SMALL_TALK
+
+    followup = live.build_followup(qa=[], candidate_brief="", asked=[])[0].content
+    assert SMALL_TALK in followup and "빈 배열" in followup and "<prompt_version>v2</prompt_version>" in followup
+
+    def evaluation_system(kind: str) -> str:
+        return evaluation.build(track="NEW_GRAD", interview_type=kind, job_title="", jd_text="", criteria=[],
+                                transcript=[], briefing_summary=None)[0].content
+
+    # 평가·보고서: 인성 면접이 아니면 사담을 빼고, 인성 면접이면 빼지 않는다(태도·소통도 보는 자리)
+    for kind in ("PT", "JOB", "PORTFOLIO"):
+        assert SMALL_TALK in evaluation_system(kind)
+        assert SMALL_TALK in report.build_brief({"interview_type": kind})[0].content
+        assert SMALL_TALK in report.build_next({"interview_type": kind}, {})[0].content
+    assert SMALL_TALK not in evaluation_system("PERSONALITY") and PERSONALITY_SMALL_TALK in evaluation_system("PERSONALITY")
+    personality = report.build_overview({"interview_type": "PERSONALITY"})[0].content
+    assert SMALL_TALK not in personality and PERSONALITY_SMALL_TALK in personality
+
+
 # ---------- 다듬기 ----------
 async def test_refine_removes_fillers_and_guards_meaning(providers, blind):
     runner = GraphRunner(providers, blind)

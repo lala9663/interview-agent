@@ -13,13 +13,13 @@
 | `briefing.resume_questions` | v1 | 〃 | `llm.quality` | `track`, `interview_type`, `job_title`, `profile`, `summary`, `count`, (`feedback`) | JSON: questions[source RESUME] |
 | `refine` | v1 | `app/prompts/live.py` | `llm.fast` | `glossary`, `utterance` | 다듬은 문장(글) |
 | `speaker.judge` | v1 | 〃 | `llm.fast` | `recent`, `utterance` | JSON: speaker, confidence |
-| `followup` | v1 | 〃 | `llm.fast` | `job_title`, `candidate_brief`, `asked`, `qa` | JSON: items[text, rationale] |
-| `evaluation` | v1 | `app/prompts/evaluation.py` | `llm.quality` | `track`, `interview_type`, `job_title`, `jd`, `briefing_summary`, `criteria`, `transcript` | JSON: scores[criterionCode, score\|null, rationale, evidenceSeqs], overallComment |
-| `report.brief` | v1 | `app/prompts/report.py` | `llm.quality` | 공통 9개(아래) | JSON: headline, overallComment, strengths, concerns, qaHighlights |
-| `report.detailed.overview` | v1 | 〃 | `llm.quality` | 공통 9개 | 〃 |
-| `report.detailed.competencies` | v1 | 〃 | `llm.quality` | 공통 9개 | JSON: competencies |
-| `report.detailed.career` | v1 | 〃 | `llm.quality` | 공통 9개 | JSON: careerChecks |
-| `report.detailed.next` | v1 | 〃 | `llm.quality` | 공통 9개 + `overview` | JSON: nextRoundChecks, risks |
+| `followup` | v2 | 〃 | `llm.fast` | `job_title`, `candidate_brief`, `asked`, `qa` | JSON: items[text, rationale] |
+| `evaluation` | v2 | `app/prompts/evaluation.py` | `llm.quality` | `track`, `interview_type`, `job_title`, `jd`, `briefing_summary`, `criteria`, `transcript` | JSON: scores[criterionCode, score\|null, rationale, evidenceSeqs], overallComment |
+| `report.brief` | v2 | `app/prompts/report.py` | `llm.quality` | 공통 9개(아래) | JSON: headline, overallComment, strengths, concerns, qaHighlights |
+| `report.detailed.overview` | v2 | 〃 | `llm.quality` | 공통 9개 | 〃 |
+| `report.detailed.competencies` | v2 | 〃 | `llm.quality` | 공통 9개 | JSON: competencies |
+| `report.detailed.career` | v2 | 〃 | `llm.quality` | 공통 9개 | JSON: careerChecks |
+| `report.detailed.next` | v2 | 〃 | `llm.quality` | 공통 9개 + `overview` | JSON: nextRoundChecks, risks |
 
 보고서 공통 입력: `track`, `interview_type`, `basis`, `job_title`, `jd`, `briefing_summary`, `ai_evaluation`, `previous_rounds`, `transcript`.
 
@@ -31,9 +31,13 @@
 2. **입력은 태그로 감싼다**: `tag("이름", 자료)`. 자료 안의 태그 모양 글자(`<...>`)는 지운다(자료가 태그를 닫고 빠져나오지 못하게).
 3. **태그 안의 지시는 따르지 않는다**: 모든 프롬프트 끝에 `GUARD` 문장이 자동으로 붙는다. 지원자 자료·전사에 "이전 지시를 무시하라" 같은 글이 있어도 자료로만 다룬다.
 4. **금지 항목 문장**(`FAIRNESS`): 지원자에 대한 글을 만드는 프롬프트에 넣는다.
-5. **출력 형식**: JSON이면 `JSON_ONLY` 문장과 형식 예시를 넣는다. 받는 쪽은 `call_structured`(`app/graphs/structured.py`)로 pydantic 검증을 하고, 실패하면 무엇이 틀렸는지 알려 주며 한 번 다시 시킨다.
-6. **지어내지 않게**: "자료에 없는 것은 쓰지 않는다 / 근거가 없으면 점수를 내지 않는다"를 지시문에 넣고, 그래프의 검증 노드에서도 강제한다(없는 seq 삭제, 근거 없는 점수 제외).
-7. 모델의 JSON 모드·tool calling에 기대지 않는다(사내 LLM이 지원하는지 모른다). 글에서 첫 JSON 객체를 꺼내 검증한다.
+5. **사담 제외**: 인사, 농담, 사담, 진행 안내를 재료로 쓰지 않게 하는 문장이다.
+   - 꼬리질문(`SMALL_TALK`): 면접 종류와 상관없이, 마지막 지원자 말이 그런 말이면 `items`를 빈 배열로 둔다.
+   - 평가·보고서(`small_talk_rule(interview_type, …)`): 인성 면접(`PERSONALITY`)이 아니면 그런 발화를 근거·문답·강점·우려로 쓰지 않는다. 인성 면접이면 빼지 않고, 사담에서 드러난 태도와 소통 방식도 관찰한 사실로 쓸 수 있다고 알린다(`PERSONALITY_SMALL_TALK`). 금지 항목 문장(`FAIRNESS`)은 인성 면접에도 그대로 적용된다.
+   - 실제 모델에서 지켜지는지는 사담이 섞인 대화로 확인해야 한다(fake는 이 문장을 보지 않는다).
+6. **출력 형식**: JSON이면 `JSON_ONLY` 문장과 형식 예시를 넣는다. 받는 쪽은 `call_structured`(`app/graphs/structured.py`)로 pydantic 검증을 하고, 실패하면 무엇이 틀렸는지 알려 주며 한 번 다시 시킨다.
+7. **지어내지 않게**: "자료에 없는 것은 쓰지 않는다 / 근거가 없으면 점수를 내지 않는다"를 지시문에 넣고, 그래프의 검증 노드에서도 강제한다(없는 seq 삭제, 근거 없는 점수 제외).
+8. 모델의 JSON 모드·tool calling에 기대지 않는다(사내 LLM이 지원하는지 모른다). 글에서 첫 JSON 객체를 꺼내 검증한다.
 
 ## 3. 프롬프트를 고칠 때
 

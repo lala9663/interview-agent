@@ -6,10 +6,10 @@ from typing import Any
 
 from langchain_core.messages import BaseMessage
 
-from app.prompts.common import FAIRNESS, JSON_ONLY, build_messages, feedback_block, tag, transcript_block
+from app.prompts.common import FAIRNESS, JSON_ONLY, build_messages, feedback_block, small_talk_rule, tag, transcript_block
 
 TASK = "evaluation"
-VERSION = "v1"
+VERSION = "v2"  # v2: 인성 면접이 아니면 사담은 근거로 쓰지 않는다
 
 _INSTRUCTIONS = f"""
 너는 면접 평가를 돕는다. 결과는 면접관이 참고만 하는 자료이며 합격·불합격을 정하지 않는다.
@@ -28,7 +28,8 @@ def build(*, track: str, interview_type: str, job_title: str, jd_text: str, crit
           transcript: list[dict[str, Any]], briefing_summary: dict[str, Any] | None,
           violations: list[str] | None = None) -> list[BaseMessage]:
     return build_messages(
-        TASK, VERSION, _INSTRUCTIONS,
+        TASK, VERSION,
+        _INSTRUCTIONS + small_talk_rule(interview_type, "그런 발화는 점수의 근거(evidenceSeqs)로 쓰지 않는다."),
         tag("track", track), tag("interview_type", interview_type), tag("job_title", job_title),
         tag("jd", jd_text), tag("briefing_summary", briefing_summary or {}), tag("criteria", criteria),
         tag("transcript", transcript_block(transcript)), feedback_block(violations or []),

@@ -19,7 +19,7 @@ from typing import Any
 from app.audio.chunker import AudioChunk, SpeechChunker
 from app.live.deps import LiveDeps, PendingUtterance, Utterance, glossary_from_context
 from app.live.followups import FollowUpScheduler
-from app.matching.matcher import KIND_BANK, KIND_PREPARED, MatchCandidate, QuestionMatcher
+from app.matching.matcher import KIND_BANK, KIND_FOLLOWUP, KIND_PREPARED, MatchCandidate, QuestionMatcher
 from app.providers.base import ProviderBusy, ProviderDown, ProviderError, SttRequest
 from app.schemas import ws as events
 from app.schemas.backend import BackendEvent, RoomContext, UtterancesRequest
@@ -305,15 +305,29 @@ class RoomSession:
         await self.emit(events.transcript_final(utt.seq, utt.speaker, utt.wire_method(self.rule_as), utt.raw_text,
                                                 utt.refined_text, utt.start_ms, utt.end_ms))
         if utt.speaker == Speaker.INTERVIEWER.value:
-            prepared = await self.matcher.best(pending.text, kinds=(KIND_PREPARED,))
-            if prepared and prepared.similarity >= self.deps.settings.matching.threshold \
-                    and prepared.candidate.question_id is not None:
-                utt.matched_question_id = prepared.candidate.question_id
-                self.asked_question_ids.add(utt.matched_question_id)
-                await self.emit(events.question_matched(utt.seq, utt.matched_question_id, prepared.similarity))
+            await self._match_question(utt, pending.text)
         self.save(utt)
         self.followups.on_final(utt)
         await self.emit_status()
+
+    async def _match_question(self, utt: Utterance, text: str) -> None:
+        """면접관의 말이 준비된 질문이나 제안한 꼬리질문과 비슷하면 "물었음"으로 알린다.
+
+        둘 다 기준을 넘으면 더 비슷한 쪽 하나만 잡는다(같으면 준비된 질문).
+        """
+        threshold = self.deps.settings.matching.threshold
+        prepared = await self.matcher.best(text, kinds=(KIND_PREPARED,))
+        followup = await self.matcher.best(text, kinds=(KIND_FOLLOWUP,))
+        p_sim = prepared.similarity if prepared and prepared.candidate.question_id is not None else -1.0
+        ref = followup.candidate.ref if followup else None
+        if ref and followup.similarity >= threshold and followup.similarity > p_sim:
+            if ref not in self.followups.matched:  # 같은 꼬리질문을 다시 말해도 한 번만 알린다
+                self.followups.matched.add(ref)
+                await self.emit(events.followup_matched(utt.seq, ref, followup.similarity))
+        elif p_sim >= threshold:
+            utt.matched_question_id = prepared.candidate.question_id
+            self.asked_question_ids.add(utt.matched_question_id)
+            await self.emit(events.question_matched(utt.seq, utt.matched_question_id, prepared.similarity))
 
     def save(self, utt: Utterance) -> None:
         self.deps.outbox.save_utterances(self.room_id, UtterancesRequest(items=[utt.to_item(self.rule_as)]))
@@ -327,6 +341,8 @@ class RoomSession:
                 self.role_override = None if role == "AUTO" else role
         elif kind == "question.asked":
             await self._question_asked(msg.get("questionId"))
+        elif kind == "question.added":
+            await self.refresh_context()  # 면접 중에 더한 질문도 말로 물으면 인식되게 비교 대상에 넣는다
         elif kind == "followup.request":
             self.followups.request_now()
         elif kind == "utterance.fix":

@@ -28,6 +28,7 @@ class FollowUpScheduler:
         self._timer: asyncio.Task | None = None
         self._running: asyncio.Task | None = None
         self.suggested: list[str] = []
+        self.matched: set[str] = set()  # 면접관이 말로 물은 꼬리질문의 id(followup.matched를 한 번만 내기 위해)
         self._counts: dict[int, int] = {}
 
     def cancel(self) -> None:

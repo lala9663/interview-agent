@@ -47,6 +47,11 @@ def question_matched(seq: int, question_id: int, similarity: float) -> dict[str,
             "similarity": round(float(similarity), 2)}
 
 
+def followup_matched(seq: int, followup_id: str, similarity: float) -> dict[str, Any]:
+    """면접관이 제안된 꼬리질문을 (비슷하게) 말로 물었다. id는 followup.suggested의 items[].id."""
+    return {"type": "followup.matched", "seq": seq, "id": followup_id, "similarity": round(float(similarity), 2)}
+
+
 def followup_suggested(based_on_seq: int, items: list[dict[str, str]]) -> dict[str, Any]:
     return {"type": "followup.suggested", "basedOnSeq": based_on_seq, "items": items}
 
