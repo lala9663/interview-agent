@@ -66,8 +66,8 @@
 | 제안 | 이유 | 지금의 우회 |
 | --- | --- | --- |
 | 평가 응답의 `score`를 `null` 허용 | "근거가 없어 점수를 내지 않음"을 항목별로 표시할 수 있다 | 항목을 빼고 총평에 적는다 |
-| `question.matched`에 질문 은행·꼬리질문 매칭도 싣기(예: `bankQuestionId`, `followUpClientId`) | 지금은 준비된 질문(`questionId`)만 알릴 수 있다. 은행 질문·제안한 꼬리질문과의 매칭은 화자 판정에만 쓰이고 화면에 못 알린다 | 알리지 않는다 |
-| 면접 중 추가·채택된 질문을 Agent에 알리는 방법(백엔드 → Agent 알림, 또는 주기적 context 재조회 규칙) | 수동 추가 질문, 채택한 꼬리질문의 id를 Agent가 몰라 매칭하지 못한다 | `question.asked`로 모르는 id가 오면 context를 다시 읽는다 |
+| `question.matched`에 질문 은행 매칭도 싣기(예: `bankQuestionId`) | 준비된 질문은 `question.matched`, 제안한 꼬리질문은 `followup.matched`로 알린다. 은행 질문과의 매칭은 화자 판정에만 쓰이고 화면에 못 알린다 | 알리지 않는다 |
+| 면접 중 추가·채택된 질문을 백엔드가 Agent에 알리는 방법(백엔드 → Agent 알림, 또는 주기적 context 재조회 규칙) | 프런트를 거치지 않고 더해진 질문의 id를 Agent가 모른다 | 프런트가 `question.added`를 보내거나 `question.asked`로 모르는 id가 오면 context를 다시 읽는다 |
 | 방이 끝났음을 알리는 이벤트(예: `room.ended`) | 지금은 닫힘 코드 1000으로만 안다 | 닫힘 코드 |
 | 2채널 오디오(면접관 마이크 / 지원자 소리) 프레임 형식 | 화자를 채널로 정할 수 있다([speaker-separation.md](speaker-separation.md) 5장) | 모노만 받는다 |
 
