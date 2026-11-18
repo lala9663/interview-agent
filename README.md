@@ -19,7 +19,7 @@ python -m venv .venv
 .venv/Scripts/python -m pytest                                  # 테스트
 .venv/Scripts/python -m uvicorn app.main:app --port 8000        # 서버
 
-curl http://localhost:8000/health                               # {"status":"UP","llm":"fake","stt":"fake"}
+curl http://localhost:8000/health                               # {"status":"UP","llm":"fake","stt":"fake"} (llmStatus·sttStatus는 아직 없다)
 .venv/Scripts/python scripts/ws_demo_client.py --turns 6 --finalize   # 합성 음성을 보내고 이벤트를 출력
 .venv/Scripts/python scripts/load_test.py --rooms 20            # 방 20개 부하 테스트(서버를 따로 띄운다)
 .venv/Scripts/python scripts/eval_speaker.py                    # 화자 판정 정확도 표
@@ -104,5 +104,5 @@ AGENTS.md          OpenCode가 읽는 규칙
 | [docs/concurrency.md](docs/concurrency.md) | 동시 20개 방: 설정, 부하 테스트 결과, 증설 기준, Redis |
 | [docs/blind-rules.md](docs/blind-rules.md) | 블라인드/금지 질문 규칙과 바꾸는 법 |
 | [docs/prompts.md](docs/prompts.md) | 프롬프트 목록과 규칙 |
-| [docs/open-questions.md](docs/open-questions.md) | 가정으로 구현한 것과 바꿀 위치 |
+| [docs/open-questions.md](docs/open-questions.md) | 가정으로 구현한 것과 바꿀 위치, API 명세에 있지만 아직 만들지 않은 것(6장) |
 | [docs/contract/api-contract.md](docs/contract/api-contract.md) | API 명세(세 레포 공통 원본의 복사본) |

@@ -119,7 +119,11 @@
 
 - **확인하지 못한 것**: 사내 LLM·Whisper 실제 호출, 실제 Redis(pub/sub·Sentinel), 실제 면접 음성의 VAD·화자 판정 정확도. 처음 붙일 때 `docs/providers.md`와 `docs/open-questions.md`의 확인 항목을 따른다. 백엔드와의 연동은 로컬에서 fake 모델로 한 번 끝까지 확인했다(2026-11-13, `docs/open-questions.md` 1장).
 - 화자 판정의 규칙 판정은 API 명세의 `SpeakerMethod.RULE`로 나간다(`SPEAKER_RULE_WIRE_METHOD`로 바꿀 수 있다).
-- 경력(화상, Knox Teams)은 API가 정해지지 않아 신입과 같이 브라우저가 음성을 보낸다고 가정했다. 트랙이 나뉘어 오게 되면 `app/speaker/chain.py`의 `ChannelJudge`와 오디오 수신부를 잇는다.
+- 경력 화상 면접(Knox Teams)은 음성을 받는 방법이 정해지지 않아 브라우저가 음성을 보낸다고 가정했다. 트랙이 나뉘어 오게 되면 `app/speaker/chain.py`의 `ChannelJudge`와 오디오 수신부를 잇는다.
+- 면접 종류는 `JOB`, `PERSONALITY` 두 가지다(`app/schemas/common.py`의 `InterviewType`).
+- 신입(`NEW_GRAD`) 면접은 백엔드 기본 설정(`app.live.new-grad-enabled=false`)에서 실시간 기능을 쓰지 않는다. 그런 면접은 방 정보 조회·WebSocket·`finalize` 호출이 오지 않고 사전 리포트 요청(`POST /internal/v1/briefings`)만 온다. 경력(`EXPERIENCED`)은 실시간 기능을 쓴다.
+- **API 명세에 있지만 아직 만들지 않은 것(2026-11-18 회의 반영)**: 사전 리포트 요청의 `applicantType`·`persona`·`predictedFollowUps` 반영과 응답의 `questions[].followUps`·`summary.checkItems`, 방 정보의 `persona`를 꼬리질문 표현에 반영하기, `/health`의 `llmStatus`·`sttStatus`. 백엔드는 보내고 받을 준비가 됐고, Agent는 모르는 항목을 무시한다(`CamelModel`의 `extra="ignore"`). 항목별로 만들 곳은 `docs/open-questions.md` 6장의 표에 있다.
+- 연속으로 실패한 모델을 잠시 부르지 않는 차단기는 있다(`app/providers/base.py`). 다른 서버·모델로 넘어가는 것은 없다.
 
 ## 10. 문서 위치
 

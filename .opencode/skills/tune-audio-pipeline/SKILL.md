@@ -20,7 +20,7 @@ description: 실시간 전사가 늦다, 말이 중간에 잘린다, 잡음이 �
 | 작은 목소리가 빠진다 | VAD 임계값 | `AUDIO_VAD_THRESHOLD_DB`를 내린다(-45~-50). `AUDIO_VAD_NOISE_MARGIN_DB`도 본다 |
 | 말 첫 음절·끝 음절이 잘린다 | 앞뒤 여유 | `AUDIO_PAD_MS`(기본 200) |
 | 무음인데 "시청해주셔서 감사합니다" 같은 글이 나온다 | Whisper가 지어낸 문장 | `whisper_http`의 `options.drop_phrases`, VAD 임계값 |
-| 방이 많으면 밀린다 / `OVERLOADED` | STT 동시 실행 수, 큐 한계 | `providers.yaml`의 `stt.live.max_concurrency`, `LIVE_STT_QUEUE_SOFT/HARD` |
+| 방이 많으면 밀린다 / `OVERLOADED` | STT 동시 실행 수, 큐 한계 | `providers.yaml`의 `stt.live.max_concurrency`, `LIVE_STT_QUEUE_SOFT`(기본 3), `LIVE_STT_QUEUE_HARD`(기본 8) |
 | final의 다듬기가 자주 빠진다(raw 그대로) | LLM이 제한 시간을 넘는다 | `LIVE_REFINE_TIMEOUT_S`(기본 4), `llm.fast.max_concurrency` |
 | 꼬리질문이 너무 빨리/늦게 뜬다 | 답이 끝났다고 보는 대기 시간 | `LIVE_FOLLOWUP_DEBOUNCE_S`(기본 1.5) |
 | 모델이 죽었다 살아났는데 한동안 전사가 안 나온다 | 차단기가 쉬는 시간 | `providers.yaml`의 `cooldown_s`(기본 30초) |

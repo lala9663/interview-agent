@@ -49,9 +49,11 @@ blind_filter ─▶ summarize ─▶ jd_questions ─▶ resume_questions ─▶
 
 `finalize`는 재생성 뒤에도 남은 금지 항목을 지운다(요약은 문장을 가리고, 질문은 통째로 뺀다). 응답의 `excluded`는 입력에서 걸러진 주제 코드다.
 
+요청의 `applicantType`·`persona`·`predictedFollowUps`는 지금 무시하고, 응답의 `questions[].followUps`·`summary.checkItems`는 아직 주지 않는다([open-questions.md](open-questions.md) 6장).
+
 ## 4. 면접 중: 방 파이프라인
 
-`app/live/session.py`의 `RoomSession`이 방 하나를 맡는다.
+`app/live/session.py`의 `RoomSession`이 방 하나를 맡는다. 방 정보(context)의 `persona`는 아직 쓰지 않는다([open-questions.md](open-questions.md) 6장).
 
 ```
 feed(PCM) ─▶ AudioStore.append            (방 전체 음성을 모은다: 사후 STT용)
@@ -94,6 +96,8 @@ feed(PCM) ─▶ AudioStore.append            (방 전체 음성을 모은다: �
 5. 끝나면 `AudioStore.release`: `MEMORY_ONLY`면 음성을 지운다. 실패하면 `POST_STT_FAILED` 이벤트를 백엔드에 보내고, 음성을 `LIVE_POST_STT_HOLD_MINUTES`(기본 30분) 동안 붙잡은 채 다시 시도한다. 그래도 안 되면 음성을 지운다(`docs/audio-pipeline.md`).
 
 백엔드는 `finalize` 응답을 받은 뒤 실시간 전사 기준(LIVE)으로 평가·보고서를 만들고, `refined-transcript`를 받으면 보정본(REFINED) 보고서를 만든다.
+
+실시간 기능을 쓰지 않는 면접(신입은 백엔드 기본 설정)은 4장과 5장의 호출(방 정보 조회, WebSocket, `finalize`)이 오지 않고 3장의 사전 리포트 요청만 온다.
 
 ## 6. 서버가 여러 대일 때
 

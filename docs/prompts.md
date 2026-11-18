@@ -25,6 +25,8 @@
 
 전사는 `[seq] 화자: 글` 줄로 들어간다(`transcript_block`). 평가와 보고서는 이 seq를 근거로 인용한다.
 
+`interview_type`은 `JOB`, `PERSONALITY` 두 가지다. 사전 리포트 요청의 `applicantType`·`persona`·`predictedFollowUps`와 방 정보의 `persona`는 아직 어느 프롬프트에도 들어가지 않는다(`briefing.*`와 `followup`에 넣어야 한다. [open-questions.md](open-questions.md) 6장).
+
 ## 2. 규칙 (`app/prompts/common.py`)
 
 1. **작업 이름과 버전**: system 첫머리에 `<task>이름</task><prompt_version>v1</prompt_version>`이 들어간다. fake LLM이 작업을 알아보는 표시이고, 로그·평가에서 어떤 프롬프트였는지 추적하는 값이다.
@@ -58,4 +60,4 @@
 | `followup` | 답에 없는 내용을 전제로 묻지 않는가. 이미 한 질문을 되풀이하지 않는가 |
 | `briefing.*` | 자료에 없는 사실을 만들지 않는가. 금지 항목 재생성이 얼마나 자주 도는가 |
 | `evaluation` | 근거 seq가 실제로 그 내용을 담고 있는가. 근거 없는 항목에 null을 내는가 |
-| `report.*` | BRIEF가 백엔드의 제한 시간(신입 120초) 안에 끝나는가. DETAILED 4단계의 총 시간 |
+| `report.*` | DETAILED 4단계의 총 시간. 신입 실시간 기능을 열었을 때(백엔드 `app.live.new-grad-enabled=true`. 기본은 꺼져 있어 신입은 보고서를 만들지 않는다)는 BRIEF가 백엔드의 제한 시간(신입 120초) 안에 끝나는가 |

@@ -1,6 +1,6 @@
 # 가정으로 구현한 것, 확인하지 못한 것
 
-> 다루는 것: 정해지지 않아 가정으로 만든 부분과 그것이 바뀌면 고칠 위치, 실제로 확인하지 못한 것, API 명세에 제안할 것.
+> 다루는 것: 정해지지 않아 가정으로 만든 부분과 그것이 바뀌면 고칠 위치, 실제로 확인하지 못한 것, API 명세에 제안할 것, API 명세에 있지만 아직 만들지 않은 것.
 >
 > 정해지면 이 문서에서 해당 줄을 지우고 코드·문서를 고친다.
 
@@ -27,7 +27,7 @@
 | DS API Hub Whisper는 OpenAI 형식 multipart(`/v1/audio/transcriptions`)이고 청크마다 WAV 한 개를 동기로 받는다 | options. 다르면 `app/providers/whisper_http.py`의 `_build_request`, `_extract_text`, `_transcribe` |
 | Whisper는 화자를 나눠 주지 않는다 | 준다면 `app/speaker/chain.py`의 `ChannelJudge`에 잇는다(`SpeakerContext.channel_speaker`) |
 | Whisper는 문장 부호를 붙여 준다(질문 매칭의 문장 분리가 부호에 기댄다) | 안 붙으면 `app/matching/tfidf.py`의 `split_sentences`를 어미 기준으로 바꾸거나, 다듬은 글로 매칭한다 |
-| 경력(화상, Knox Teams)도 브라우저가 PCM을 보낸다 | 트랙이 나뉘어 오면 `app/live/ws.py`(수신), `ChannelJudge`. Teams가 서버로 직접 보내면 수신부가 새로 필요하다 |
+| 경력 화상 면접(Knox Teams)은 브라우저가 PCM을 보낸다(신입은 백엔드 기본 설정에서 실시간 기능을 쓰지 않아 음성을 보내지 않는다. 6장) | 트랙이 나뉘어 오면 `app/live/ws.py`(수신), `ChannelJudge`. Teams가 서버로 직접 보내면 수신부가 새로 필요하다 |
 | 방마다 마이크 단말은 하나, 모노 한 채널이다 | 마이크 2개·2채널이면 API 명세 3.1(프레임 형식)과 `app/audio/` |
 | 입장권은 HS256, 클레임 `sub`·`name`·`roomId`·`audio`·`exp` | `app/live/ticket.py` |
 | 방 상태가 `LIVE`일 때만 오디오를 받는다. `CREATED`면 2초마다 백엔드 context를 다시 읽어 확인한다 | `app/live/session.py`의 `accepting_audio` |
@@ -80,3 +80,21 @@
 | People팀(현업) | 블라인드·금지 질문 기준, 녹음 보관 정책, 면접실 마이크 구성, 화자 오류 허용 수준, 그룹 면접 여부 |
 | Knox Teams 담당 | 화상 면접 음성을 받는 방법(참가자별 트랙) |
 | 인프라 | Redis(Sentinel) 접속 정보, 로드밸런서의 WebSocket·경로 해시 지원, 서버 메모리 |
+
+## 6. API 명세에 있지만 아직 만들지 않은 것 (2026-11-18 회의 반영)
+
+백엔드는 아래 항목을 보내고 받을 준비가 됐다. Agent는 면접 종류(`JOB`, `PERSONALITY` 두 가지)만 반영했다. 모르는 요청 항목은 `CamelModel`의 `extra="ignore"`로 무시하므로 지금은 오류 없이 지나간다. 하나를 만들면 이 표에서 그 줄을 지운다.
+
+| 항목 | API 명세 | 지금 | 만들 곳 |
+| --- | --- | --- | --- |
+| 사전 리포트 요청의 `applicantType`, `persona`를 질문의 표현과 내용에 반영 | 4.1 | 무시한다 | `app/schemas/internal.py`의 `BriefingRequest`, `app/prompts/briefing.py`, `app/graphs/briefing.py`, `app/providers/fake_responses.py` |
+| 사전 리포트 요청의 `predictedFollowUps`(질문마다 미리 만들 예상 꼬리질문 수)와 응답의 `questions[].followUps` | 4.1 | 요청 값을 무시하고 `followUps`를 주지 않는다 | `BriefingRequest`·`GeneratedQuestion`(`app/schemas/internal.py`), `app/prompts/briefing.py`, `app/graphs/briefing.py`(블라인드 검사 포함), `app/providers/fake_responses.py` |
+| 사전 리포트 응답의 `summary.checkItems` | 4.1, 2.6 | 주지 않는다(`checkPoints`만 준다) | `BriefingSummary`(`app/schemas/internal.py`), `app/prompts/briefing.py`, `app/graphs/briefing.py` |
+| 방 정보(context)의 `persona`를 꼬리질문 표현에 반영 | 5장 | 무시한다 | `app/schemas/backend.py`의 `RoomContext`, `app/prompts/live.py`(`followup`), `app/graphs/followup.py`, `app/live/followups.py` |
+| `/health`의 `llmStatus`·`sttStatus`. 있어야 백엔드의 시스템 상태 화면이 LLM과 음성 인식을 따로 보여 준다(없으면 Agent의 상태를 따른다) | 4장, 2.13 | 싣지 않는다(`status`, `llm`, `stt`만 준다) | `app/schemas/internal.py`의 `HealthResponse`, `app/api/internal.py`의 `health` |
+
+함께 알아 둘 것:
+
+- 실시간 기능을 쓰지 않는 면접(신입은 백엔드 설정 `app.live.new-grad-enabled=false`가 기본)은 방 정보 조회·WebSocket·`finalize` 호출이 오지 않고 사전 리포트 요청만 온다. 백엔드는 그런 면접의 사전 리포트 요청에 `predictedFollowUps: 3`을 보낸다(API 명세 4.1).
+- fake 백엔드의 데모 방(`app/demo/data.py`)은 `track`이 `NEW_GRAD`다. Agent는 트랙으로 실시간 기능을 막지 않으므로 단독 실행 데모는 그대로 돈다.
+- 연속으로 실패한 모델을 잠시 부르지 않는 차단기는 있다(`app/providers/base.py`, [providers.md](providers.md)). 다른 서버·모델로 넘어가는 것은 없다.
