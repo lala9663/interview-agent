@@ -92,6 +92,7 @@
 | 사전 리포트 응답의 `summary.checkItems` | 4.1, 2.6 | 주지 않는다(`checkPoints`만 준다) | `BriefingSummary`(`app/schemas/internal.py`), `app/prompts/briefing.py`, `app/graphs/briefing.py` |
 | 방 정보(context)의 `persona`를 꼬리질문 표현에 반영 | 5장 | 무시한다 | `app/schemas/backend.py`의 `RoomContext`, `app/prompts/live.py`(`followup`), `app/graphs/followup.py`, `app/live/followups.py` |
 | `/health`의 `llmStatus`·`sttStatus`. 있어야 백엔드의 시스템 상태 화면이 LLM과 음성 인식을 따로 보여 준다(없으면 Agent의 상태를 따른다) | 4장, 2.13 | 싣지 않는다(`status`, `llm`, `stt`만 준다) | `app/schemas/internal.py`의 `HealthResponse`, `app/api/internal.py`의 `health` |
+| 사전 리포트 요청의 `parts`(요약만 또는 질문만 만들기) | 4.1 | 받지 않는다(무시). 늘 요약과 질문을 모두 만들어 돌려주고, 백엔드가 요청한 부분만 저장한다 | `app/schemas/internal.py`의 `BriefingRequest`, `app/graphs/briefing.py`(필요 없는 부분의 모델 호출을 건너뛴다) |
 
 함께 알아 둘 것:
 
