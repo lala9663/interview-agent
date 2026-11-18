@@ -28,10 +28,8 @@ class Track(str, Enum):
 
 
 class InterviewType(str, Enum):
-    PT = "PT"
-    PERSONALITY = "PERSONALITY"
-    PORTFOLIO = "PORTFOLIO"
     JOB = "JOB"
+    PERSONALITY = "PERSONALITY"
 
 
 class InterviewMode(str, Enum):

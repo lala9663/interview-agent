@@ -49,7 +49,7 @@ def test_briefing_contract_shape(client):
 
 def test_evaluation_contract_shape(client):
     r = client.post("/internal/v1/evaluations", headers=INTERNAL, json={
-        "track": "NEW_GRAD", "interviewType": "PT", "jobTitle": "SW개발", "jdText": "...", "criteria": CRITERIA,
+        "track": "NEW_GRAD", "interviewType": "JOB", "jobTitle": "SW개발", "jdText": "...", "criteria": CRITERIA,
         "transcript": TRANSCRIPT, "briefingSummary": {}})
     assert r.status_code == 200
     body = r.json()
@@ -61,7 +61,7 @@ def test_evaluation_contract_shape(client):
 def test_report_contract_shape(client):
     base = {"track": "EXPERIENCED", "basis": "REFINED", "interviewType": "JOB", "jobTitle": "SW개발", "jdText": "...",
             "transcript": TRANSCRIPT, "briefingSummary": {}, "aiEvaluation": {"scores": [], "overallComment": ""},
-            "previousRounds": [{"type": "PORTFOLIO", "headline": "...", "checkPoints": []}]}
+            "previousRounds": [{"type": "JOB", "headline": "...", "checkPoints": []}]}
     keys = {"headline", "overallComment", "strengths", "concerns", "qaHighlights", "competencies", "careerChecks",
             "nextRoundChecks", "risks"}
     brief = client.post("/internal/v1/reports", headers=INTERNAL, json=base | {"detail": "BRIEF"}).json()

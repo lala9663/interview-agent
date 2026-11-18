@@ -43,7 +43,7 @@ DEMO_PROFILE: dict[str, Any] = {
 
 def demo_context(room_id: int) -> dict[str, Any]:
     return {
-        "roomId": room_id, "interviewId": 501, "status": "LIVE", "track": "NEW_GRAD", "interviewType": "PT",
+        "roomId": room_id, "interviewId": 501, "status": "LIVE", "track": "NEW_GRAD", "interviewType": "JOB",
         "mode": "OFFLINE", "jobTitle": "SW개발", "jdText": DEMO_JD, "candidateBrief": DEMO_BRIEF,
         "questions": DEMO_QUESTIONS, "questionBank": DEMO_BANK,
     }
@@ -51,6 +51,6 @@ def demo_context(room_id: int) -> dict[str, Any]:
 
 def demo_briefing_request() -> dict[str, Any]:
     return {
-        "track": "NEW_GRAD", "interviewType": "PT", "jobTitle": "SW개발", "jdText": DEMO_JD,
+        "track": "NEW_GRAD", "interviewType": "JOB", "jobTitle": "SW개발", "jdText": DEMO_JD,
         "candidate": {"profile": DEMO_PROFILE}, "questionBank": DEMO_BANK, "questionCount": {"jd": 4, "resume": 6},
     }

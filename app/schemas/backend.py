@@ -22,7 +22,7 @@ class RoomContext(CamelModel):
     interview_id: int | None = None
     status: RoomStatus = RoomStatus.LIVE
     track: Track = Track.NEW_GRAD
-    interview_type: InterviewType = InterviewType.PT
+    interview_type: InterviewType = InterviewType.JOB
     mode: InterviewMode = InterviewMode.OFFLINE
     job_title: str = ""
     jd_text: str = ""
