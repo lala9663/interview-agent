@@ -22,10 +22,9 @@ API 명세 원본은 세 레포 공통 문서의 `03-api-contract.md`다. 이 �
 ## 2. 절차
 
 1. **제안을 쓴다**(이슈나 PR 설명): 무엇을, 왜, 바뀌는 JSON 예시(전·후), 영향받는 레포와 화면·기능, 깨는 변경이면 옮겨 가는 순서.
-2. **세 레포 담당이 합의한다.** 합의 전에는 `app/schemas/`의 API 명세 타입을 고치지 않는다. 급하면 기존 API 명세를 지키는 범위에서만 구현한다(예: 새 열거형 값이 필요해도 합의 전에는 API 명세에 있는 값으로 바꿔 내보낸다. 화자 판정의 규칙 방법이 API 명세에 들어가기 전에 `SPEAKER_RULE_WIRE_METHOD`로 그렇게 했다).
-3. **같은 날 세 레포에 반영한다.** 원본을 고치고 세 레포의 `docs/contract/api-contract.md`를 같은 내용으로 덮어쓴다.
-4. **이 레포에서 한 PR로 고친다.**
-   - `docs/contract/api-contract.md` (복사본)
+2. **세 명이 합의한다.** 합의 전에는 `app/schemas/`의 API 명세 타입을 고치지 않는다. 급하면 기존 API 명세를 지키는 범위에서만 구현한다(예: 새 열거형 값이 필요해도 합의 전에는 API 명세에 있는 값으로 바꿔 내보낸다. 화자 판정의 규칙 방법이 API 명세에 들어가기 전에 `SPEAKER_RULE_WIRE_METHOD`로 그렇게 했다).
+3. **같은 날 세 레포에 반영한다.** 원본을 고치고 세 레포의 `docs/contract/api-contract.md`를 같은 내용으로 덮어쓴다. API 명세 네 개(원본과 세 레포의 복사본)는 문서만 담은 PR로 먼저 올린다(제목에 `[API 변경]`, 세 명 모두 확인).
+4. **이 레포의 코드는 그 뒤에 따로, 한 PR로 고친다.**
    - `app/schemas/` — `internal.py`(4장), `backend.py`(5장), `ws.py`(3장 이벤트 만들기 함수), `common.py`(열거형)
    - 구현: `app/api/internal.py`, `app/live/`, `app/backend/client.py`(fake 포함), `app/demo/data.py`(데모 context)
    - 테스트: `tests/test_api_backend.py`(REST 필드 이름), `tests/test_ws.py`(이벤트 모양), 백엔드 요청 모양
@@ -53,6 +52,7 @@ API 명세 원본은 세 레포 공통 문서의 `03-api-contract.md`다. 이 �
 
 - [ ] 합의된 제안이 있다(링크)
 - [ ] 세 레포의 API 명세 복사본이 같다
+- [ ] API 명세는 문서만 담은 PR로 먼저 올렸다(제목에 `[API 변경]`)
 - [ ] 스키마·구현·fake·테스트를 한 PR에서 고쳤다
 - [ ] `pytest` 통과, `scripts/ws_demo_client.py`로 이벤트 모양 확인
 - [ ] 깨는 변경이면 배포 순서를 PR에 적었다
